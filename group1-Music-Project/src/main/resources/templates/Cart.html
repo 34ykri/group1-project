@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="/css/homepage.css">
+<title>My Cart</title>
+</head>
+<body>
+	<nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">View All Products</a></li>
+            <li><a href="/ViewCart">Cart</a></li>
+        </ul>
+    </nav>
+    <table>
+    	<tr th:each="currentCart : ${cart}">
+    	    <td th:text="${currentCart.item}"></td>
+    		<td><a th:href="@{/RemoveFromCart/{id}(id=${currentCart.id})}">Remove</a></td>  
+		</tr>
+    </table>
+</body>
+</html>

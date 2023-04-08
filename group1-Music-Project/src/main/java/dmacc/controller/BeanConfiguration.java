@@ -19,5 +19,5 @@ public class BeanConfiguration {
         User user = new User();
         return user;
     }
-
+    
 }

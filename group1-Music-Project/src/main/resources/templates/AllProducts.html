@@ -6,8 +6,10 @@
 </head>
 <body>
     <table>
-        <tr>
-
+        <tr th:each="currentProduct : ${products}">
+        <td th:text="${currentProduct.item}"></td>
+		<td><a th:href="@{/AddToCart/{id}(id=${currentProduct.id})}">Add to Cart</a></td>    	
+		
         </tr>
     </table>
 </body>
