@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import dmacc.beans.CartEntity;
 import dmacc.beans.Product;
 import dmacc.beans.User;
 import dmacc.repository.CartRepository;
@@ -33,19 +34,32 @@ public class CartController {
 	@GetMapping("/AddToCart/{id}")
 	public String AddToCart(@PathVariable("id") int id, Model model) {
 		Product p = productRepo.findById(id).orElse(null);
-		if(p == null) {
+		//Id, brand, item, price
+		CartEntity ce = new CartEntity(p.getId(), p.getBrand(), p.getItem(),p.getPrice());
+		
+		if(ce == null || p == null) {
 			return "AllProducts";
 		}
-		cartRepo.save(p);
+		if(p.getInventory() == 0) {
+			return "AllProducts";
+		}
+		//Subtract from inventory
+		p.setInventory(p.getInventory() - ce.getQuantity());
+		cartRepo.save(ce);
+		productRepo.save(p);
 		return "Cart";
 	}
 	@GetMapping("/RemoveFromCart/{id}")
 	public String RemoveFromCart(@PathVariable("id") int id, Model model) {
+		CartEntity ce = cartRepo.findById(id).orElse(null);
 		Product p = productRepo.findById(id).orElse(null);
-		if(p == null) {
+		if(ce == null || p == null) {
 			return "AllProducts";
 		}
-		cartRepo.delete(p);
+		//Re add inventory
+		p.setInventory(p.getInventory() + ce.getQuantity());
+		cartRepo.delete(ce);
+		productRepo.save(p);
 		return "Cart";
 	}
 	
