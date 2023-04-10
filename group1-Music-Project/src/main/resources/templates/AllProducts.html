@@ -3,11 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>All Products</title>
+    <link rel="stylesheet" type="text/css" href="/css/homepage.css">
+
 </head>
 <body>
-    <table>
-        <tr>
 
+
+<nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="/ViewAllProducts">View All Products</a></li>
+            <li><a href="/ViewCart">Cart</a></li>
+        </ul>
+    </nav>
+    <table>
+    	<th>item</th>
+    	<th>inventory</th>
+    	<th>price</th>
+        <tr th:each="currentProduct : ${products}">
+        <td th:text="${currentProduct.item}"></td>
+        <td th:text="${currentProduct.inventory}"></td>
+        <td th:text="${currentProduct.price}"></td>
+		<td><a th:href="@{/AddToCart/{id}(id=${currentProduct.id})}">Add to Cart</a></td>    	
+		
         </tr>
     </table>
 </body>
