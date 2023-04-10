@@ -30,12 +30,12 @@ public class CartEntity {
 
     @Column(name = "QUANTITY")
     private int quantity;
+    
     public CartEntity(int id, String brand, String item, String price) {
     	this.id = id;
     	this.brand = brand;
     	this.item = item;
     	this.price = price;
-    	this.quantity = 1;
     }
 
 }

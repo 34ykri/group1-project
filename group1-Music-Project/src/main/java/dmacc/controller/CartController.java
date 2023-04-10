@@ -35,19 +35,24 @@ public class CartController {
 	public String AddToCart(@PathVariable("id") int id, Model model) {
 		Product p = productRepo.findById(id).orElse(null);
 		//Id, brand, item, price
-		CartEntity ce = new CartEntity(p.getId(), p.getBrand(), p.getItem(),p.getPrice());
-		
+		CartEntity ce = cartRepo.findById(id).orElse(null);
+		if(ce == null) {
+			ce = new CartEntity(p.getId(), p.getBrand(), p.getItem(),p.getPrice());
+		}
 		if(ce == null || p == null) {
 			return "AllProducts";
 		}
+		/*
 		if(p.getInventory() == 0) {
 			return "AllProducts";
 		}
+		*/
 		//Subtract from inventory
-		p.setInventory(p.getInventory() - ce.getQuantity());
+		ce.setQuantity(ce.getQuantity()+1);
+		p.setInventory(p.getInventory() - 1);
 		cartRepo.save(ce);
 		productRepo.save(p);
-		return "Cart";
+		return ViewCart(model);
 	}
 	@GetMapping("/RemoveFromCart/{id}")
 	public String RemoveFromCart(@PathVariable("id") int id, Model model) {
