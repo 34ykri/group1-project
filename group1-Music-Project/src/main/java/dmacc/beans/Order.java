@@ -11,12 +11,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @NoArgsConstructor
+@Table(name="orders")
 public class Order {
 	@Id
 	@GeneratedValue
@@ -26,8 +28,8 @@ public class Order {
 	private String lname;
 	private String orderEmail;
 	
-	private int cardNumber;
-	private int securityCode;
+	private String cardNumber;
+	private String securityCode;
 	private String nameOnCard;
 	private String expirationDate;
 	
@@ -44,5 +46,6 @@ public class Order {
 			this.total = this.total + itemPrice;
 		}
 	}
+	
 	
 }

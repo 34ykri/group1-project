@@ -2,9 +2,21 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/homepage.css">
 <title>Thank You for your Purchase</title>
 </head>
 <body>
+<nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="/ViewAllProducts">View All Products</a></li>
+            <li><a href="/ViewCart">Cart</a></li>
+        </ul>
+    </nav>
 <h1>Thank you for your order</h1>
+<h2>Order Number : <span th:text="${order.idOrderNumber}"></span></h2>
+<h2>Order Status : <span th:text="${order.orderStatus}"></span></h2>
+
 </body>
 </html>
