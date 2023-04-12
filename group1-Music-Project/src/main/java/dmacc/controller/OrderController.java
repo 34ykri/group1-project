@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import dmacc.beans.CartEntity;
 import dmacc.beans.Order;
+import dmacc.beans.User;
 import dmacc.repository.CartRepository;
 import dmacc.repository.OrderRepository;
+import dmacc.repository.UserRepository;
 
 @Controller
 public class OrderController {
@@ -21,30 +23,44 @@ public class OrderController {
 	OrderRepository orderRepo;
 	@Autowired
 	CartRepository cartRepo;
+	@Autowired
+	UserRepository userRepo;
+	
 	@GetMapping("/Checkout")
 	public String Checkout(Model model) {
 		Order o = new Order();
+		User u = new User();
 		o.setItems(cartRepo.findAll());
 		o.calculateTotal();
 		model.addAttribute("cart", cartRepo.findAll());
 		model.addAttribute("newOrder", o);
+		model.addAttribute("users", u);
 		return "Checkout";
 	}
 	@PostMapping("/Checkout")
-	public String Checkout(@ModelAttribute Order o, Model model) {
+	public String Checkout(@ModelAttribute Order o, @ModelAttribute User u, Model model) {
 		o.setOrderStatus("Processing");
 		orderRepo.save(o);
+		User u2 = userRepo.findByEmail(u.getEmail());
+		if(u2 != null) {
+			List<Order> userOrders = u2.getUserOrders();
+			userOrders.add(o);
+		}
 		cartRepo.deleteAll();
 		int id = o.getIdOrderNumber();
-		return returnOrder(id, model);
+		return ReturnOrder(id, model);
 	}
 	
 	@GetMapping("/OrderConfirmation/")
-	public String returnOrder(int id, Model model) {
+	public String ReturnOrder(int id, Model model) {
 		Order o = orderRepo.findById(id).orElse(null);
 		model.addAttribute("order", o);
 		return "OrderConfirmation";
 	}
-
+	
+	@GetMapping("OrderLookup/{id}")
+	public String OrderLookup() {
+		return null;
+	}
 
 }
