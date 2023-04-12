@@ -33,6 +33,9 @@ public class CartEntity {
     @Column(name = "QUANTITY")
     private int quantity;
     
+    @Column(name="ENTITY_ID")
+    private String entitySessionID;
+    
     public CartEntity(int id, String brand, String item, String price) {
     	this.id = id;
     	this.brand = brand;

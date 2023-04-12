@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import dmacc.beans.CartEntity;
+import dmacc.beans.CartSessionID;
 import dmacc.beans.Product;
 import dmacc.beans.User;
 import dmacc.repository.CartRepository;
@@ -19,34 +20,34 @@ import dmacc.repository.ProductRepository;
 public class CartController {
 	@Autowired
 	ProductRepository productRepo;
-	
 	@Autowired
 	CartRepository cartRepo;
-	
+	String cartSessionId;
 	@GetMapping("/ViewCart")
 	public String ViewCart(Model model) {
 		if(cartRepo.findAll().isEmpty()) {
 			return "EmptyCart";
 		}
-		model.addAttribute("cart", cartRepo.findAll());
+		model.addAttribute("cart", cartRepo.findItems(cartSessionId));
 		return "Cart";
+		
 	}
 	@GetMapping("/AddToCart/{id}")
 	public String AddToCart(@PathVariable("id") int id, Model model) {
+		if(cartSessionId == null) {
+			cartSessionId = CartSessionID.createCartSessionID();
+		}
 		Product p = productRepo.findById(id).orElse(null);
 		//Id, brand, item, price
 		CartEntity ce = cartRepo.findById(id).orElse(null);
 		if(ce == null) {
 			ce = new CartEntity(p.getId(), p.getBrand(), p.getItem(),p.getPrice());
+			ce.setEntitySessionID(cartSessionId);
 		}
 		if(ce == null || p == null) {
 			return "AllProducts";
 		}
-		/*
-		if(p.getInventory() == 0) {
-			return "AllProducts";
-		}
-		*/
+		
 		//Subtract from inventory
 		ce.setQuantity(ce.getQuantity()+1);
 		p.setInventory(p.getInventory() - 1);

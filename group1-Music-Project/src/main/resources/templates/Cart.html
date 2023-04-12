@@ -19,11 +19,16 @@
     	<th>item</th>
     	<th>price</th>
     	<th>quantity</th>
+    	<!-- delete session later, used for testing -->
+    	<th>session</th>
     	<tr th:each="currentCart : ${cart}">
     	    <td th:text="${currentCart.brand}"></td>
     	    <td th:text="${currentCart.item}"></td>
     	    <td th:text="${currentCart.price}"></td>
     	    <td th:text="${currentCart.quantity}"></td>
+    	    <!-- delete session later, used for testing -->
+    	    <td th:text="${currentCart.entitySessionID}"></td>
+    	    
     		<td><a th:href="@{/RemoveFromCart/{id}(id=${currentCart.id})}">Remove</a></td>  
 		</tr>
     </table>

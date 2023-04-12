@@ -46,6 +46,7 @@ public class OrderController {
 			List<Order> userOrders = u2.getUserOrders();
 			userOrders.add(o);
 		}
+		
 		cartRepo.deleteAll();
 		int id = o.getIdOrderNumber();
 		return ReturnOrder(id, model);
