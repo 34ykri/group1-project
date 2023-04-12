@@ -15,6 +15,7 @@
         </ul>
     </nav>
     <h1>Checkout</h1>
+    
     <table>
     	<th>brand</th>
     	<th>item</th>
@@ -31,16 +32,18 @@
 		<td th:text="${newOrder.total}"></td>
     </table>
     <br>
+    
 	<form th:object="${newOrder}" th:action="@{/Checkout}" method="POST" id="orderForm">
-    First Name:  <input name="firstName" id="firstName" size="20" required> <br>
-    Last Name: <input name="lastName" id="lastName" size="20" required><br>
-    Email: <input name="email" id="email" size="30" required><br>
-    <br>
-    Card Number: <input name="cardNumber" id="cardNumber" size="16" required><br>
-    Security Code <input name="securityCode" id="cardNumber" size="3" required><br>
-    Name On Card: <input name="nameOnCard" id="nameOnCard" size="40" required><br>
-    Expiration Date: <input name="expirationDate" id="expirationDate" size="5" required><br>
-    <button type="submit">Submit</button>
-  </form>
+    	First Name:  <input name="fname" id="fname" size="20" required> <br>
+    	Last Name: <input name="lname" id="lname" size="20" required><br>
+    	Email: <input name="orderEmail" id="orderEmail" size="30" required><br>
+    	<br>
+    	Card Number: <input name="cardNumber" id="cardNumber" size="16" required><br>
+    	Security Code <input name="securityCode" id="securityCode" size="3" required><br>
+    	Name On Card: <input name="nameOnCard" id="nameOnCard" size="40" required><br>
+    	Expiration Date: <input name="expirationDate" id="expirationDate" size="5" required><br>
+    	<input type="hidden" name="orderStatus" id="orderStatus" value="Processing">
+    	<button type="submit">Submit</button>
+  	</form>
 </body>
 </html>

@@ -13,9 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import dmacc.beans.CartEntity;
 import dmacc.beans.Order;
 import dmacc.repository.CartRepository;
+import dmacc.repository.OrderRepository;
 
 @Controller
 public class OrderController {
+	@Autowired
+	OrderRepository orderRepo;
 	@Autowired
 	CartRepository cartRepo;
 	@GetMapping("/Checkout")
@@ -23,20 +26,25 @@ public class OrderController {
 		Order o = new Order();
 		o.setItems(cartRepo.findAll());
 		o.calculateTotal();
-		model.addAttribute("newOrder", o);
 		model.addAttribute("cart", cartRepo.findAll());
+		model.addAttribute("newOrder", o);
 		return "Checkout";
 	}
-	@PostMapping("/Checkout/{id}")
-	public String Checkout(@PathVariable("id") int id, @ModelAttribute Order o, Model model) {
-		
+	@PostMapping("/Checkout")
+	public String Checkout(@ModelAttribute Order o, Model model) {
+		o.setOrderStatus("Processing");
+		orderRepo.save(o);
+		cartRepo.deleteAll();
+		int id = o.getIdOrderNumber();
 		return returnOrder(id, model);
 	}
 	
-	@GetMapping("/OrderConfirmation/{id}")
-	public String returnOrder(@PathVariable("id") int id, Model model) {
-		
+	@GetMapping("/OrderConfirmation/")
+	public String returnOrder(int id, Model model) {
+		Order o = orderRepo.findById(id).orElse(null);
+		model.addAttribute("order", o);
 		return "OrderConfirmation";
 	}
+
 
 }
