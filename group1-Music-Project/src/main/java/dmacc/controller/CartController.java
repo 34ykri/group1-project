@@ -63,7 +63,6 @@ public class CartController {
 		
 		//Subtract from inventory
 		ce.setQuantity(ce.getQuantity()+1);
-		p.setInventory(p.getInventory() - 1);
 		cartRepo.save(ce);
 		productRepo.save(p);
 		return ViewCart(model);
@@ -108,7 +107,15 @@ public class CartController {
 			model.addAttribute("userError", true);
 			return "Checkout";
 		}
-		
+		List<CartEntity> cart = cartRepo.findItems(cartSessionId);
+		//Subtract from Inventory
+		for(int i = 0; i < cart.size(); i++) {
+			CartEntity ce = cart.get(i);
+			Product p = productRepo.findById(ce.getId()).orElse(null);
+			if(p != null) {
+				p.setInventory(p.getInventory()-ce.getQuantity());
+			}
+		}
 		o.setOrderStatus("Processing");
 		o.setUserId(u.getId());
 		userRepo.save(u);
