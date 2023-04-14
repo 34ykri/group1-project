@@ -113,12 +113,15 @@ public class CartController {
 //			model.addAttribute("newOrder", o);
 //			return "Checkout";
 //		}
-
+		List<CartEntity> orderCart = cartRepo.findItems(cartSessionId);
 		List<CartEntity> cart = cartRepo.findItems(cartSessionId);
+		if(orderCart.isEmpty()) {
+			System.out.println("EMPTY CART");
+		}
 		//Subtract from Inventory
 		for(int i = 0; i < cart.size(); i++) {
 			CartEntity ce = cart.get(i);
-			Product p = productRepo.findById(ce.getId()).orElse(null);
+			Product p = productRepo.findById(ce.getProductId()).orElse(null);
 			if(p != null) {
 				p.setInventory(p.getInventory()-ce.getQuantity());
 				productRepo.save(p);
@@ -126,13 +129,12 @@ public class CartController {
 			ce.setEntitySessionID("0");
 			cartRepo.save(ce);
 		}
+		o.setItems(orderCart);
 		o.setOrderStatus("Processing");
 		o.setUserId(u.getId());
 		userRepo.save(u);
 		o.setPw("");
 		orderRepo.save(o);
-		
-		
 		int id = o.getIdOrderNumber();
 		return ReturnOrder(id, model);
 	}

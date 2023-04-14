@@ -44,8 +44,8 @@ public class Order {
 	private String orderStatus;
 	private String pw;
 	
-	@OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
-	public List<CartEntity> items = new ArrayList<CartEntity>();
+	@OneToMany(cascade=CascadeType.MERGE, fetch=FetchType.EAGER, mappedBy="order")
+	public List<CartEntity> items;
 	
 	public double calculateTotal(List<CartEntity> theseItems) {
 		double calTotal = 0;
