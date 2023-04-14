@@ -107,12 +107,12 @@ public class CartController {
 		}
 		String userPw = u.getPassword();
 		String orderPw = o.getPw();
-		if(userPw != orderPw) {
-			model.addAttribute("userError", true);
-			model.addAttribute("cart", cartRepo.findItems(cartSessionId));
-			model.addAttribute("newOrder", o);
-			return "Checkout";
-		}
+//		if(userPw != orderPw) {
+//			model.addAttribute("userError", true);
+//			model.addAttribute("cart", cartRepo.findItems(cartSessionId));
+//			model.addAttribute("newOrder", o);
+//			return "Checkout";
+//		}
 
 		List<CartEntity> cart = cartRepo.findItems(cartSessionId);
 		//Subtract from Inventory
