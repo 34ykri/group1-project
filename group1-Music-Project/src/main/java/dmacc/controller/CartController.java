@@ -7,14 +7,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import dmacc.beans.CartEntity;
 import dmacc.beans.CartSessionID;
+import dmacc.beans.Order;
 import dmacc.beans.Product;
 import dmacc.beans.User;
 import dmacc.repository.CartRepository;
+import dmacc.repository.OrderRepository;
 import dmacc.repository.ProductRepository;
+import dmacc.repository.UserRepository;
 
 @Controller
 public class CartController {
@@ -22,18 +27,26 @@ public class CartController {
 	ProductRepository productRepo;
 	@Autowired
 	CartRepository cartRepo;
+	@Autowired
+	UserRepository userRepo;
+	@Autowired
+	OrderRepository orderRepo;
+	
 	String cartSessionId;
+
 	@GetMapping("/ViewCart")
 	public String ViewCart(Model model) {
 		if(cartRepo.findAll().isEmpty()) {
 			return "EmptyCart";
 		}
+		
 		model.addAttribute("cart", cartRepo.findItems(cartSessionId));
 		return "Cart";
 		
 	}
 	@GetMapping("/AddToCart/{id}")
 	public String AddToCart(@PathVariable("id") int id, Model model) {
+
 		if(cartSessionId == null) {
 			cartSessionId = CartSessionID.createCartSessionID();
 		}
@@ -55,6 +68,7 @@ public class CartController {
 		productRepo.save(p);
 		return ViewCart(model);
 	}
+	
 	@GetMapping("/RemoveFromCart/{id}")
 	public String RemoveFromCart(@PathVariable("id") int id, Model model) {
 		CartEntity ce = cartRepo.findById(id).orElse(null);
@@ -68,13 +82,54 @@ public class CartController {
 		productRepo.save(p);
 		return "Cart";
 	}
+
+	@GetMapping("/Checkout")
+	public String Checkout(Model model) {
+		Order o = new Order();
+		o.setItems(cartRepo.findAll());
+		o.calculateTotal();
+		model.addAttribute("cart", cartRepo.findItems(cartSessionId));
+		model.addAttribute("newOrder", o);
+		return "Checkout";
+	}
 	
-	/*
-	@GetMapping("/AddToCart/{user}/{id}")
-	public String AddToCart(@PathVariable("id") int id, @PathVariable("user") User user, Model model ) {
+	@PostMapping("/Checkout")
+	public String Checkout(@ModelAttribute Order o, Model model) {
+		User u = userRepo.findByEmail(o.getOrderEmail());
+		if(u == null) {
+			//Create new user
+			u = new User();
+			u.setEmail(o.getOrderEmail());
+			u.setPassword(o.getPw());
+			u.setFirstName(o.getFname());
+			u.setLastName(o.getLname());
+		}
+		if(u.getPassword() != o.getPw()) {
+			model.addAttribute("userError", true);
+			return "Checkout";
+		}
+		
+		o.setOrderStatus("Processing");
+		o.setUserId(u.getId());
+		userRepo.save(u);
+		o.setPw("");
+		orderRepo.save(o);
+		
+		int id = o.getIdOrderNumber();
+		return ReturnOrder(id, model);
+	}
+	
+	@GetMapping("/OrderConfirmation/")
+	public String ReturnOrder(int id, Model model) {
+		Order o = orderRepo.findById(id).orElse(null);
+		model.addAttribute("order", o);
+		return "OrderConfirmation";
+	}
+	
+	@GetMapping("OrderLookup")
+	public String OrderLookup() {
 		return null;
 	}
-	*/
-	
+
 	
 }

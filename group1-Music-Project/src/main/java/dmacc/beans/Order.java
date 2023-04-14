@@ -23,10 +23,17 @@ public class Order {
 	@Id
 	@GeneratedValue
 	private int idOrderNumber;
-	//First, last , Email are placeholders until we can get user working
+	private int userId;
+	private String sessionId;
+	
 	private String fname;
 	private String lname;
 	private String orderEmail;
+	
+	private String address;
+	private String zip;
+	private String state;
+	private String city;
 	
 	private String cardNumber;
 	private String securityCode;
@@ -35,6 +42,7 @@ public class Order {
 	
 	private double total;
 	private String orderStatus;
+	private String pw;
 	
 	@OneToMany(cascade=CascadeType.MERGE, fetch=FetchType.EAGER)
 	private List<CartEntity> items;
