@@ -29,10 +29,12 @@ public class User {
     
     @Column(name = "PASSWORD")
     private String password;
+    @Column(name = "CONFIRM_PW")
+    private String confirmPW;
     
-    @Column(name = "USER_ORDERS")
-	@OneToMany(cascade=CascadeType.MERGE, fetch=FetchType.EAGER)
-    private List<Order> userOrders;
+//    @Column(name = "USER_ORDERS")
+//	  @OneToMany(cascade=CascadeType.MERGE, fetch=FetchType.EAGER)
+//    private List<Order> userOrders;
     
     
 //    @OneToMany(mappedBy = "User")

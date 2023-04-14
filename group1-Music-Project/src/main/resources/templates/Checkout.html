@@ -15,34 +15,44 @@
         </ul>
     </nav>
     <h1>Checkout</h1>
-    
     <table>
-    	<th>brand</th>
-    	<th>item</th>
-    	<th>price</th>
-    	<th>quantity</th>
-    	
+    	<tr>
+    		<th>brand</th>
+    		<th>item</th>
+    		<th>price</th>
+    		<th>quantity</th>
+    	</tr>
     	<tr th:each="currentCart : ${cart}">
     	    <td th:text="${currentCart.brand}"></td>
     	    <td th:text="${currentCart.item}"></td>
     	    <td th:text="${currentCart.price}"></td>
     	    <td th:text="${currentCart.quantity}"></td>
 		</tr>
-		<th>Total</th>
-		<td th:text="${newOrder.total}"></td>
+		<tr>
+			<th>Total</th>
+			<td th:text="${newOrder.total}"></td>
+		</tr>
     </table>
     <br>
     
 	<form th:object="${newOrder}" th:action="@{/Checkout}" method="POST" id="orderForm">
+		Login to Account<br>
+		<div th:if="${userError}">Incorrect Email or Password, Try again</div>
+	    Email: <input name="orderEmail" id="orderEmail" size="30" required><br>
+	    Password: <input name="pw" id="pw" size="30" required><br>
+	    <br>
     	First Name:  <input name="fname" id="fname" size="20" required> <br>
     	Last Name: <input name="lname" id="lname" size="20" required><br>
-    	Email: <input name="orderEmail" id="orderEmail" size="30" required><br>
+    	Address: <input name="address" id="address" size="30" required><br>
+    	Zip Code: <input name="zip" id="zip" size="5" required><br>
+    	City: <input name="city" id="city" size="20" required><br>
+    	State Abbreviation: <input name="state" id="state" size="2" required><br>
     	<br>
     	Card Number: <input name="cardNumber" id="cardNumber" size="16" required><br>
     	Security Code <input name="securityCode" id="securityCode" size="3" required><br>
     	Name On Card: <input name="nameOnCard" id="nameOnCard" size="40" required><br>
     	Expiration Date: <input name="expirationDate" id="expirationDate" size="5" required><br>
-    	<input type="hidden" name="orderStatus" id="orderStatus" value="Processing">
+    	<input type="hidden" name="orderStatus" id="orderStatus" value="Processing">    	
     	<button type="submit">Submit</button>
   	</form>
 </body>
