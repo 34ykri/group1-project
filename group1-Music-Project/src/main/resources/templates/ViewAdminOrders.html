@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>All Orders</title>
+    <link rel="stylesheet" type="text/css" href="/css/homepage.css">
+</head>
+<body>
+	<nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/">Order Lookup</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="/ViewAllProducts">View All Products</a></li>
+            <li><a href="/ViewCart">Cart</a></li>
+        </ul>
+    </nav>
+	<div th:if="${ordersEmpty}">We have no orders at the moment</div>
+	<div th:if="${ordersFull}">
+		<table>
+			<tr>
+				<th>Order Number</th>
+				<th>User Id</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Email</th>
+				<th>Address</th>
+				<th>City</th>
+				<th>State</th>
+				<th>Zip Code</th>
+				<th>Total</th>
+				<th>Order Status</th>
+			</tr>
+			<tr th:each="order : ${allOrders}">
+				<td th:text="${order.idOrderNumber}"></td>
+				<td th:text="${order.userId}"></td>
+				<td th:text="${order.fname}"></td>
+				<td th:text="${order.lname}"></td>
+				<td th:text="${order.orderEmail}"></td>
+				<td th:text="${order.address}"></td>
+				<td th:text="${order.city}"></td>
+				<td th:text="${order.state}"></td>
+				<td th:text="${order.zip}"></td>
+				<td th:text="${order.total}"></td>
+				<td th:text="${order.orderStatus}"></td>
+			</tr>
+			<tr>
+				<th>Items in Order</th>
+			</tr>
+			<tr>
+				<th>Item Id</th>
+				<th>Item Name</th>
+				<th>Brand</th>
+				<th>Price</th>
+				<th>Quantity</th>
+			</tr>
+			<tr th:each="item : ${orderItems}">
+				<td th:text="${item.id}"></td>
+				<td th:text="${item.item}"></td>
+				<td th:text="${item.brand}"></td>
+				<td th:text="${item.price}"></td>
+				<td th:text="${item.quantity}"></td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

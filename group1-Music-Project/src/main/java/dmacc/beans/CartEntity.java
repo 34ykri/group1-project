@@ -16,7 +16,9 @@ public class CartEntity {
 	
     @Column(name = "ID")
     @Id
+    @GeneratedValue
     private int id;
+    private int productId;
 
     @Column(name = "BRAND")
     private String brand;
@@ -37,7 +39,8 @@ public class CartEntity {
     private String entitySessionID;
     
     public CartEntity(int id, String brand, String item, String price) {
-    	this.id = id;
+    	super();
+    	this.productId = id;
     	this.brand = brand;
     	this.item = item;
     	this.price = price;

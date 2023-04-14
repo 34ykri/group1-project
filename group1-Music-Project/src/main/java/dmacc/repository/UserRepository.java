@@ -11,8 +11,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-	@Query(value="SELECT u FROM users u WHERE u.email = ?",  nativeQuery = true)
-	User findByEmail(String email);
+	@Query("SELECT u FROM User u WHERE u.email = :email")
+	User findByEmail(@Param("email") String email);
 	
 	@Query("SELECT u FROM User u WHERE u.email = :email AND u.password = :password")
 	User login(@Param("email") String email, @Param("password") String password);

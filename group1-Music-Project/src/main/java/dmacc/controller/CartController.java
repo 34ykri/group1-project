@@ -39,7 +39,9 @@ public class CartController {
 		if(cartRepo.findAll().isEmpty()) {
 			return "EmptyCart";
 		}
-		
+		if(cartRepo.findItems(cartSessionId).isEmpty()) {
+			return "EmptyCart";
+		}
 		model.addAttribute("cart", cartRepo.findItems(cartSessionId));
 		return "Cart";
 		
@@ -52,11 +54,9 @@ public class CartController {
 		}
 		Product p = productRepo.findById(id).orElse(null);
 		//Id, brand, item, price
-		CartEntity ce = cartRepo.findById(id).orElse(null);
-		if(ce == null) {
-			ce = new CartEntity(p.getId(), p.getBrand(), p.getItem(),p.getPrice());
-			ce.setEntitySessionID(cartSessionId);
-		}
+		CartEntity ce =  new CartEntity(p.getId(), p.getBrand(), p.getItem(),p.getPrice());
+		ce.setEntitySessionID(cartSessionId);
+
 		if(ce == null || p == null) {
 			return "AllProducts";
 		}
@@ -85,8 +85,9 @@ public class CartController {
 	@GetMapping("/Checkout")
 	public String Checkout(Model model) {
 		Order o = new Order();
-		o.setItems(cartRepo.findAll());
-		o.calculateTotal();
+		o.setItems(cartRepo.findItems(cartSessionId));
+		double tot = o.calculateTotal(cartRepo.findItems(cartSessionId));
+		o.setTotal(tot);
 		model.addAttribute("cart", cartRepo.findItems(cartSessionId));
 		model.addAttribute("newOrder", o);
 		return "Checkout";
@@ -95,18 +96,24 @@ public class CartController {
 	@PostMapping("/Checkout")
 	public String Checkout(@ModelAttribute Order o, Model model) {
 		User u = userRepo.findByEmail(o.getOrderEmail());
+		double tot = o.calculateTotal(cartRepo.findItems(cartSessionId));
+		o.setTotal(tot);
+		
 		if(u == null) {
-			//Create new user
-			u = new User();
-			u.setEmail(o.getOrderEmail());
-			u.setPassword(o.getPw());
-			u.setFirstName(o.getFname());
-			u.setLastName(o.getLname());
+			User u2 = new User();
+			model.addAttribute("invalidUser", true);
+			model.addAttribute("newUser", u2);
+			return "Register";
 		}
-		if(u.getPassword() != o.getPw()) {
+		String userPw = u.getPassword();
+		String orderPw = o.getPw();
+		if(userPw != orderPw) {
 			model.addAttribute("userError", true);
+			model.addAttribute("cart", cartRepo.findItems(cartSessionId));
+			model.addAttribute("newOrder", o);
 			return "Checkout";
 		}
+
 		List<CartEntity> cart = cartRepo.findItems(cartSessionId);
 		//Subtract from Inventory
 		for(int i = 0; i < cart.size(); i++) {
@@ -114,13 +121,17 @@ public class CartController {
 			Product p = productRepo.findById(ce.getId()).orElse(null);
 			if(p != null) {
 				p.setInventory(p.getInventory()-ce.getQuantity());
+				productRepo.save(p);
 			}
+			ce.setEntitySessionID("0");
+			cartRepo.save(ce);
 		}
 		o.setOrderStatus("Processing");
 		o.setUserId(u.getId());
 		userRepo.save(u);
 		o.setPw("");
 		orderRepo.save(o);
+		
 		
 		int id = o.getIdOrderNumber();
 		return ReturnOrder(id, model);
@@ -138,5 +149,14 @@ public class CartController {
 		return null;
 	}
 
-	
+	@GetMapping("/ViewAdminOrders")
+	public String ViewAdminOrders(Model model) {
+		if(orderRepo.findAll().isEmpty()) {
+			model.addAttribute("ordersEmpty", true);
+			return "ViewAdminOrders";
+		}
+		model.addAttribute("ordersFull", true);
+		model.addAttribute("allOrders", orderRepo.findAll());
+		return "ViewAdminOrders";
+	}
 }

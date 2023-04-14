@@ -1,5 +1,6 @@
 package dmacc.beans;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,6 @@ public class Order {
 	@GeneratedValue
 	private int idOrderNumber;
 	private int userId;
-	private String sessionId;
 	
 	private String fname;
 	private String lname;
@@ -44,15 +44,17 @@ public class Order {
 	private String orderStatus;
 	private String pw;
 	
-	@OneToMany(cascade=CascadeType.MERGE, fetch=FetchType.EAGER)
-	private List<CartEntity> items;
+	@OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
+	public List<CartEntity> items = new ArrayList<CartEntity>();
 	
-	public void calculateTotal() {
-		for(int i = 0; i < items.size(); i++) {
-			CartEntity thisItem = items.get(i);
+	public double calculateTotal(List<CartEntity> theseItems) {
+		double calTotal = 0;
+		for(int i = 0; i < theseItems.size(); i++) {
+			CartEntity thisItem = theseItems.get(i);
 			double itemPrice = Double.parseDouble(thisItem.getPrice());
-			this.total = this.total + itemPrice;
+			calTotal = calTotal + itemPrice;
 		}
+		return calTotal;
 	}
 	
 	
