@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <title>All Products</title>
     <link rel="stylesheet" type="text/css" href="/css/homepage.css">
+    
+<script type="text/javascript">
+    function clearSearch() {
+        window.location = "[[@{/}]]";
+    }
+</script>
+
 </head>
 <body>
 <nav>
@@ -14,6 +21,11 @@
             <li><a href="/ViewCart">Cart</a></li>
         </ul>
     </nav>
+  <form th:action="@{/search}" method="get">
+  	<input type="text" name="keyword" th:value="${keyword}"  placeholder="Find Product" size="50" >
+  	<button type="submit" class="btn btn-info" >Search</button>
+  	<button type="submit" class="btn btn-info" >Reset</button>
+  </form>
     <table>
     	<th>item</th>
     	<th>inventory</th>
@@ -22,8 +34,8 @@
         <td th:text="${currentProduct.item}"></td>
         <td th:text="${currentProduct.inventory}"></td>
         <td th:text="${currentProduct.price}"></td>
-		<td><a th:href="@{/AddToCart/{id}(id=${currentProduct.id})}">Add to Cart</a></td>    	
-		
+		<td><a th:href="@{/AddToCart/{id}(id=${currentProduct.id})}">Add to Cart</a></td> 
+		<td><a th:href="@{/SaveForLater/{id}(id=${currentProduct.id})}">Save For Later</a></td>   	
         </tr>
     </table>
 </body>

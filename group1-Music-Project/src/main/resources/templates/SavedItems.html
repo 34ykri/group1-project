@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Your Saved Items</title>
+    <link rel="stylesheet" type="text/css" href="/css/homepage.css">
+</head>
+<body>
+	<nav>
+        <ul>
+            <li><a href="/home">Home</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="/ViewAllProducts">View All Products</a></li>
+            <li><a href="/ViewCart">Cart</a></li>
+        </ul>
+    </nav>
+    <table>
+    	<th> BRAND </th>
+    	<th> ITEM </th>
+    	<th> PRICE </th>
+    	<tr th:each="currentSaved : ${saved}">
+    	    <td th:text="${currentSaved.brand}"></td>
+    	    <td th:text="${currentSaved.item}"></td>
+    	    <td th:text="${currentSaved.price}"></td>
+    		<td><a th:href="@{/RemoveFromSaved/{id}(id=${currentSaved.id})}">Remove</a></td>  
+		</tr>
+    </table>
+</body>
+</html>
