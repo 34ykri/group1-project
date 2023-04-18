@@ -116,8 +116,17 @@ public class CartController {
 		List<CartEntity> orderCart = cartRepo.findItems(cartSessionId);
 		List<CartEntity> cart = cartRepo.findItems(cartSessionId);
 		if(orderCart.isEmpty()) {
-			System.out.println("EMPTY CART");
+			//System.out.println("EMPTY CART");
 		}
+		
+		o.setItems(orderCart);
+		o.setOrderStatus("Processing");
+		o.setUserId(u.getId());
+		userRepo.save(u);
+		o.setPw("");
+		orderRepo.save(o);
+		Integer sessionId = o.getIdOrderNumber();
+		//System.out.println(sessionId);
 		//Subtract from Inventory
 		for(int i = 0; i < cart.size(); i++) {
 			CartEntity ce = cart.get(i);
@@ -126,15 +135,10 @@ public class CartController {
 				p.setInventory(p.getInventory()-ce.getQuantity());
 				productRepo.save(p);
 			}
-			ce.setEntitySessionID("0");
+			ce.setEntitySessionID(sessionId.toString());
+			//System.out.println("esid " + ce.getEntitySessionID());
 			cartRepo.save(ce);
 		}
-		o.setItems(orderCart);
-		o.setOrderStatus("Processing");
-		o.setUserId(u.getId());
-		userRepo.save(u);
-		o.setPw("");
-		orderRepo.save(o);
 		int id = o.getIdOrderNumber();
 		return ReturnOrder(id, model);
 	}
@@ -149,16 +153,5 @@ public class CartController {
 	@GetMapping("OrderLookup")
 	public String OrderLookup() {
 		return null;
-	}
-
-	@GetMapping("/ViewAdminOrders")
-	public String ViewAdminOrders(Model model) {
-		if(orderRepo.findAll().isEmpty()) {
-			model.addAttribute("ordersEmpty", true);
-			return "ViewAdminOrders";
-		}
-		model.addAttribute("ordersFull", true);
-		model.addAttribute("allOrders", orderRepo.findAll());
-		return "ViewAdminOrders";
 	}
 }

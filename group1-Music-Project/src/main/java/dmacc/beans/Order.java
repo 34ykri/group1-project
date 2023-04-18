@@ -44,7 +44,7 @@ public class Order {
 	private String orderStatus;
 	private String pw;
 	
-	@OneToMany(cascade=CascadeType.MERGE, fetch=FetchType.EAGER, mappedBy="order")
+	@OneToMany(cascade=CascadeType.MERGE, fetch=FetchType.LAZY, mappedBy="order")
 	public List<CartEntity> items;
 	
 	public double calculateTotal(List<CartEntity> theseItems) {
