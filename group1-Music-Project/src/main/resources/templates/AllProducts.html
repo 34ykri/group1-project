@@ -21,11 +21,13 @@
             <li><a href="/ViewCart">Cart</a></li>
         </ul>
     </nav>
-  <form th:action="@{/search}" method="get">
+    
+  <form th:action="@{/findByKeyword}" method="get">
   	<input type="text" name="keyword" th:value="${keyword}"  placeholder="Find Product" size="50" >
   	<button type="submit" class="btn btn-info" >Search</button>
   	<button type="submit" class="btn btn-info" >Reset</button>
   </form>
+  
     <table>
     	<th>item</th>
     	<th>inventory</th>
