@@ -10,5 +10,4 @@ public class Group1MusicProjectApplication {
 		SpringApplication.run(Group1MusicProjectApplication.class, args);
  
 	}
-
 }

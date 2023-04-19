@@ -15,15 +15,18 @@
         </ul>
     </nav>
     <table>
-    	<th>brand</th>
-    	<th>item</th>
-    	<th>price</th>
-    	<th>quantity</th>
+    	<tr>
+    		<th>brand</th>
+    		<th>item</th>
+    		<th>price</th>
+    		<th>quantity</th>
+    	</tr>
     	<tr th:each="currentCart : ${cart}">
     	    <td th:text="${currentCart.brand}"></td>
     	    <td th:text="${currentCart.item}"></td>
     	    <td th:text="${currentCart.price}"></td>
     	    <td th:text="${currentCart.quantity}"></td>
+    	    
     		<td><a th:href="@{/RemoveFromCart/{id}(id=${currentCart.id})}">Remove</a></td>  
 		</tr>
     </table>

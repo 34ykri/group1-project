@@ -13,7 +13,7 @@
 
 </head>
 <body>
-<nav>
+	<nav>
         <ul>
             <li><a href="/">Home</a></li>
             <li><a href="#">Contact</a></li>
@@ -29,9 +29,11 @@
   </form>
   
     <table>
-    	<th>item</th>
-    	<th>inventory</th>
-    	<th>price</th>
+    	<tr>
+    		<th>item</th>
+    		<th>inventory</th>
+    		<th>price</th>
+    	</tr>
         <tr th:each="currentProduct : ${products}">
         <td th:text="${currentProduct.item}"></td>
         <td th:text="${currentProduct.inventory}"></td>
