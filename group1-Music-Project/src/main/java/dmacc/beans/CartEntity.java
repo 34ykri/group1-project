@@ -2,6 +2,7 @@ package dmacc.beans;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -39,8 +40,9 @@ public class CartEntity {
     
     @Column(name="ENTITY_ID")
     private String entitySessionID;
-    @ManyToOne
-    @JoinColumn(name = "order_id")
+    
+    @ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="idOrderNumber")
     private Order order;
     
     public CartEntity(int id, String brand, String item, String price) {
