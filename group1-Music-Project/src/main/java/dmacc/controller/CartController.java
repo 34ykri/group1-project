@@ -1,6 +1,5 @@
 package dmacc.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ import dmacc.beans.User;
 import dmacc.repository.CartRepository;
 import dmacc.repository.OrderRepository;
 import dmacc.repository.ProductRepository;
-import dmacc.repository.UserRepository;
+import dmacc.repository.UserRepo;
 
 @Controller
 public class CartController {
@@ -28,7 +27,7 @@ public class CartController {
 	@Autowired
 	CartRepository cartRepo;
 	@Autowired
-	UserRepository userRepo;
+	UserRepo userRepo;
 	@Autowired
 	OrderRepository orderRepo;
 	

@@ -8,12 +8,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import dmacc.beans.User;
-import dmacc.repository.UserRepository;
+import dmacc.repository.UserRepo;
+//import dmacc.repository.UserRepository;
 
-@Controller
+//@Controller
+/*
 public class UserController {
 	@Autowired
-	UserRepository userRepo;
+	UserRepo userRepo;
 	
 	@GetMapping("/Register")
 	public String Register(Model model) {
@@ -34,4 +36,4 @@ public class UserController {
 
 		return "redirect:/Success";
 	}
-}
+}*/

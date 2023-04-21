@@ -31,5 +31,4 @@ public class BeanConfiguration {
     	Order order = new Order();
     	return order;
     }
-    
 }

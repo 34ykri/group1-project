@@ -15,7 +15,7 @@ import dmacc.beans.Order;
 import dmacc.repository.CartRepository;
 import dmacc.repository.OrderRepository;
 import dmacc.repository.ProductRepository;
-import dmacc.repository.UserRepository;
+import dmacc.repository.UserRepo;
 
 @Controller
 public class OrderController {
@@ -24,7 +24,7 @@ public class OrderController {
 	@Autowired
 	CartRepository cartRepo;
 	@Autowired
-	UserRepository userRepo;
+	UserRepo userRepo;
 	@Autowired
 	OrderRepository orderRepo;
 	
@@ -53,5 +53,4 @@ public class OrderController {
 		model.addAttribute("items", orderList);
 		return "AdminViewOrder";
 	}
-	
 }

@@ -52,5 +52,4 @@ public class CartEntity {
     	this.item = item;
     	this.price = price;
     }
-
 }

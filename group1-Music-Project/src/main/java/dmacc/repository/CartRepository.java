@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import dmacc.beans.CartEntity;
 @Repository
 public interface CartRepository extends JpaRepository<CartEntity, Integer> {
+	
 	@Query(value="SELECT * FROM cart WHERE ENTITY_ID = :session",  nativeQuery = true)
 	public List<CartEntity> findItems(@Param("session") String session);
 	@Query(value="SELECT * FROM cart WHERE ID = :session",  nativeQuery = true)
