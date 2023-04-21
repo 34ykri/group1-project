@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query
-    (value = "select * from shop b where b.brand like %:keyword% or b.item_name like %:keyword% or b.type like %:keyword%", nativeQuery = true)
+    (value = "select * from product b where b.brand like %:keyword% or b.item_name like %:keyword% or b.type like %:keyword%", nativeQuery = true)
     public List<Product> findByKeyword(@Param("keyword")String keyword);
 }
 
