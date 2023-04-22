@@ -37,6 +37,4 @@ public class Product {
 
     @Column(name = "INVENTORY")
     private int inventory;
-
-
 }

@@ -29,17 +29,17 @@ public class ProductController {
     @PostMapping("/AddProduct")
     public String AddProduct(@ModelAttribute Product p, Model model) {
         productRepo.save(p);
-        return "redirect:/Success";
+        return "redirect:/AddProduct?success";
     }
 
-    @GetMapping("/ViewAllProducts")
+    @GetMapping("ViewAllProducts")
     public String ViewAllProducts(Model model) {
         if(productRepo.findAll().isEmpty()) {
-            return "home";
+            return "products";
         }
 
         model.addAttribute("products", productRepo.findAll());
 
-        return "AllProducts";
+        return "ViewAllProducts";
     }
 }
