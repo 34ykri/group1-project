@@ -30,6 +30,11 @@ public class UserController {
 			model.addAttribute("newUser", u);
 			return "Register";
 		}
+		if(!u.getPassword().equals(u.getConfirmPW())) {
+			model.addAttribute("invalidPassword", true);
+			model.addAttribute("newUser", u);
+			return "Register";
+		}
 		userRepo.save(u);
 
 		return "redirect:/Success";

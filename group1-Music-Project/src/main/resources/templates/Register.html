@@ -17,6 +17,7 @@
             <li><a href="/ViewCart">Cart</a></li>
         </ul>
     </nav>
+    <h1>Registration</h1>
 	<div th:if="${invalidUser}">Please create an account to continue</div>
 	<div th:if="${invalidEmail}">This email is already registered</div>
 	<div th:if="${invalidPassword}">Passwords do not match</div>
@@ -24,7 +25,7 @@
 	<form th:object="${newUser}" th:action="@{/Register}" method="POST" id="registerUserForm">
 	Email: <input name="email" id="email" size="20" th:field="*{email}" required> <br>
 	Password: <input name="password" id="password" size="20" th:field="*{password}" required> <br>
-<!-- 	Confirm Password: <input name="confirmPW" id="confirmPW" size="20" th:field="*{confirmPW}" required> <br> -->
+	Confirm Password: <input name="confirmPW" id="confirmPW" size="20" th:field="*{confirmPW}" required> <br>
 	<button type="submit">Submit</button>
 	</form>
 </body>

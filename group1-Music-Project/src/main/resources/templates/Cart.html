@@ -16,6 +16,9 @@
             <li><a href="/ViewCart">Cart</a></li>
         </ul>
     </nav>
+    <h1>My Cart</h1>
+    <div th:if="${userError}">Your Cart is Empty</div>
+    
     <table>
     	<tr>
     		<th>brand</th>
@@ -28,7 +31,6 @@
     	    <td th:text="${currentCart.item}"></td>
     	    <td th:text="${currentCart.price}"></td>
     	    <td th:text="${currentCart.quantity}"></td>
-    	    
     		<td><a th:href="@{/RemoveFromCart/{id}(id=${currentCart.id})}">Remove</a></td>  
 		</tr>
     </table>
