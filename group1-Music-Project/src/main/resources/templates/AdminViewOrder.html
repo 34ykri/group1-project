@@ -2,8 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/homepage.css">
     <linK rel="stylesheet" type="text/css" href="/css/Navbar.css">
-<title>Thank You for your Purchase</title>
+<title>Admin View Order</title>
 </head>
 <body>
 <nav>
@@ -16,7 +17,7 @@
             <li><a href="/ViewCart">Cart</a></li>
         </ul>
     </nav>
-<h1>Thank you for your order</h1>
+<h1>Admin: Viewing Order</h1>
 <h2>Order Number : <span th:text="${order.idOrderNumber}"></span></h2>
 <h2>Order Status : <span th:text="${order.orderStatus}"></span></h2>
 <table>
@@ -27,7 +28,7 @@
         <th>Price</th>
         <th>Quantity</th>
    </tr>
-   <tr th:each="item : ${order.items}">
+   <tr th:each="item : ${items}">
         <td th:text="${item.productId}"></td>
         <td th:text="${item.item}"></td>
         <td th:text="${item.brand}"></td>

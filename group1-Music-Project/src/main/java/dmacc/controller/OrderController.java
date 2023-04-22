@@ -6,37 +6,52 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import dmacc.beans.CartEntity;
 import dmacc.beans.Order;
 import dmacc.repository.CartRepository;
+import dmacc.repository.OrderRepository;
+import dmacc.repository.ProductRepository;
+import dmacc.repository.UserRepository;
 
 @Controller
 public class OrderController {
 	@Autowired
+	ProductRepository productRepo;
+	@Autowired
 	CartRepository cartRepo;
-	@GetMapping("/Checkout")
-	public String Checkout(Model model) {
-		Order o = new Order();
-		o.setItems(cartRepo.findAll());
-		o.calculateTotal();
-		model.addAttribute("newOrder", o);
-		model.addAttribute("cart", cartRepo.findAll());
-		return "Checkout";
+	@Autowired
+	UserRepository userRepo;
+	@Autowired
+	OrderRepository orderRepo;
+	
+	@GetMapping("/ViewAdminOrders")
+	public String ViewAdminOrders(Model model) {
+		if(orderRepo.findAll().isEmpty()) {
+			model.addAttribute("ordersEmpty", true);
+			return "ViewAdminOrders";
+		}
+		model.addAttribute("ordersFull", true);
+		model.addAttribute("allOrders", orderRepo.findAll());
+		return "ViewAdminOrders";
 	}
-	@PostMapping("/Checkout/{id}")
-	public String Checkout(@PathVariable("id") int id, @ModelAttribute Order o, Model model) {
-		
-		return returnOrder(id, model);
+	@GetMapping("/AdminViewOrder/{id}")
+	public String AdminViewOrder(@PathVariable("id") int id, Model model) {
+		Order o = orderRepo.findById(id).orElse(null);
+		if(o == null) {
+			return "InvalidOrder";
+		}
+		Integer sessionId = id;
+		List<CartEntity> orderList = cartRepo.findItems(sessionId.toString());
+		if(orderList.isEmpty()) {
+			System.out.println("empty");
+		}
+		model.addAttribute("order", o);
+		model.addAttribute("items", orderList);
+		return "AdminViewOrder";
 	}
 	
-	@GetMapping("/OrderConfirmation/{id}")
-	public String returnOrder(@PathVariable("id") int id, Model model) {
-		
-		return "OrderConfirmation";
-	}
-
 }

@@ -1,6 +1,8 @@
 package dmacc.beans;
 
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
+@Table(name="users")
 public class User {
 
     @Column(name = "ID")
@@ -23,7 +26,17 @@ public class User {
 
     @Column(name = "EMAIL")
     private String email;
-
+    
+    @Column(name = "PASSWORD")
+    private String password;
+    @Column(name = "CONFIRM_PW")
+    private String confirmPW;
+    
+//    @Column(name = "USER_ORDERS")
+//	  @OneToMany(cascade=CascadeType.MERGE, fetch=FetchType.EAGER)
+//    private List<Order> userOrders;
+    
+    
 //    @OneToMany(mappedBy = "User")
 //    private List<Product> cart = new ArrayList<Product>();
 }

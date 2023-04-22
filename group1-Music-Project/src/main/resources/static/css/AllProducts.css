@@ -1,0 +1,21 @@
+.CardContainer {
+    padding-top: 15px;
+    display: grid;
+
+    grid-auto-columns: minmax(0, 1fr);
+    grid-auto-flow: column;
+    background-color: blue;
+    grid-gap: 20px;
+}
+
+.card {
+    background-color: aquamarine;
+    padding: 20px;
+    border-radius: 5px;
+
+    height: 400px;
+}
+
+.card-body {
+    min-width: 80%;
+}

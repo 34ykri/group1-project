@@ -2,31 +2,38 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="/css/homepage.css">
+	<linK rel="stylesheet" type="text/css" href="/css/Navbar.css">
 <title>My Cart</title>
 </head>
 <body>
-	<nav>
+<nav>
         <ul>
             <li><a href="/">Home</a></li>
+            <li><a href="/">Order Lookup</a></li>
+            <li><a href="/Register">Register</a>
             <li><a href="#">Contact</a></li>
             <li><a href="/ViewAllProducts">View All Products</a></li>
             <li><a href="/ViewCart">Cart</a></li>
         </ul>
     </nav>
     <table>
-    	<th>brand</th>
-    	<th>item</th>
-    	<th>price</th>
-    	<th>quantity</th>
+    	<tr>
+    		<th>brand</th>
+    		<th>item</th>
+    		<th>price</th>
+    		<th>quantity</th>
+    	</tr>
     	<tr th:each="currentCart : ${cart}">
     	    <td th:text="${currentCart.brand}"></td>
     	    <td th:text="${currentCart.item}"></td>
     	    <td th:text="${currentCart.price}"></td>
     	    <td th:text="${currentCart.quantity}"></td>
+    	    
     		<td><a th:href="@{/RemoveFromCart/{id}(id=${currentCart.id})}">Remove</a></td>  
 		</tr>
     </table>
+
+
    	<a href="/Checkout">Checkout</a>
 </body>
 </html>

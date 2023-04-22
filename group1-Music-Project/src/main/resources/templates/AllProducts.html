@@ -3,31 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <title>All Products</title>
-    <link rel="stylesheet" type="text/css" href="/css/homepage.css">
-
+    <link rel="stylesheet" type="text/css" href="/css/AllProducts.css">
+    <linK rel="stylesheet" type="text/css" href="/css/Navbar.css">
 </head>
 <body>
 
 
-<nav>
+    <nav>
         <ul>
             <li><a href="/">Home</a></li>
+            <li><a href="/">Order Lookup</a></li>
+            <li><a href="/Register">Register</a>
             <li><a href="#">Contact</a></li>
             <li><a href="/ViewAllProducts">View All Products</a></li>
             <li><a href="/ViewCart">Cart</a></li>
         </ul>
     </nav>
-    <table>
-    	<th>item</th>
-    	<th>inventory</th>
-    	<th>price</th>
-        <tr th:each="currentProduct : ${products}">
-        <td th:text="${currentProduct.item}"></td>
-        <td th:text="${currentProduct.inventory}"></td>
-        <td th:text="${currentProduct.price}"></td>
-		<td><a th:href="@{/AddToCart/{id}(id=${currentProduct.id})}">Add to Cart</a></td>    	
-		
-        </tr>
-    </table>
+<!--    <table>-->
+<!--    	<tr>-->
+<!--            <th>Type</th>-->
+<!--    		<th>Item</th>-->
+<!--    		<th>Inventory</th>-->
+<!--            <th>Description</th>-->
+<!--    		<th>Price</th>-->
+<!--    	</tr>-->
+<!--        <tr th:each="currentProduct : ${products}">-->
+<!--            <td th:text="${currentProduct.type}"></td>-->
+<!--        	<td th:text="${currentProduct.item}"></td>-->
+<!--        	<td th:text="${currentProduct.inventory}"></td>-->
+<!--            <td th:text="${currentProduct.description}"></td>-->
+<!--        	<td th:text="${currentProduct.price}"></td>-->
+<!--			<td><a th:href="@{/AddToCart/{id}(id=${currentProduct.id})}">Add to Cart</a></td>    	-->
+<!--        </tr>-->
+<!--    </table>-->
+
+    <div  class="CardContainer">
+        <div th:each="product : ${products}">
+            <div class="card">
+                <h2 th:text="${product.item}"></h2>
+                <!--            <img th:src="" alt="Product Image">-->
+                <div class="card-body">
+                    <h3 th:text="${product.price}"></h3>
+                    <p th:text="${product.description}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </body>
 </html>
