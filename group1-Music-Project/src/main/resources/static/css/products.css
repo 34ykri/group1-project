@@ -1,0 +1,8 @@
+.description {
+    display: -webkit-box;
+    max-width: calc(80%);
+    max-height: 70px;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
