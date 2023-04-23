@@ -5,6 +5,7 @@
  */
 package dmacc.controller;
 
+import dmacc.repository.ProductRepository;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class AuthController {
     @Autowired
     private AdminUserService adminUserService;
 
+    @Autowired
+    private ProductRepository productRepo;
+
     public AuthController(UserService userService, AdminUserService adminUserService) {
         this.userService = userService;
         this.adminUserService = adminUserService;
@@ -50,6 +54,7 @@ public class AuthController {
     public String showProductsForm(Model model) {
     	UserDto user = new UserDto();
     	model.addAttribute("user", user);
+        model.addAttribute("products", productRepo.findAll());
         return "products";
     }
     

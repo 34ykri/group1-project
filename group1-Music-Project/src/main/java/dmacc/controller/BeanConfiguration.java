@@ -16,6 +16,8 @@ public class BeanConfiguration {
         return product;
     }
 
+
+
     @Bean
     User user() {
         User user = new User();
