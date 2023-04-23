@@ -98,15 +98,14 @@ public class CartController {
 		double tot = o.calculateTotal(cartRepo.findItems(cartSessionId));
 		o.setTotal(tot);
 		
+
 		if(u == null) {
 			User u2 = new User();
 			model.addAttribute("invalidUser", true);
 			model.addAttribute("newUser", u2);
 			return "Register";
 		}
-		String userPw = u.getPassword();
-		String orderPw = o.getPw();
-//		if(userPw != orderPw) {
+//		if(!u.getPassword().equals(o.getPw())) {
 //			model.addAttribute("userError", true);
 //			model.addAttribute("cart", cartRepo.findItems(cartSessionId));
 //			model.addAttribute("newOrder", o);
@@ -115,7 +114,7 @@ public class CartController {
 		List<CartEntity> orderCart = cartRepo.findItems(cartSessionId);
 		List<CartEntity> cart = cartRepo.findItems(cartSessionId);
 		if(orderCart.isEmpty()) {
-			//System.out.println("EMPTY CART");
+			return "EmptyCart";		
 		}
 		
 		o.setItems(orderCart);
@@ -149,8 +148,4 @@ public class CartController {
 		return "OrderConfirmation";
 	}
 	
-	@GetMapping("OrderLookup")
-	public String OrderLookup() {
-		return null;
-	}
 }

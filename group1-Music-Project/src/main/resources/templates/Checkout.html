@@ -39,9 +39,10 @@
     
 	<form th:object="${newOrder}" th:action="@{/Checkout}" method="POST" id="orderForm">
 		Login to Account<br>
-		<div th:if="${userError}">Incorrect Email or Password, Try again</div>
+<!-- 		<div th:if="${userError}">Incorrect Email or Password, Try again</div> -->
+		<div th:if="${userError}">Email not valid, Try again</div>
 	    Email: <input name="orderEmail" id="orderEmail" size="30" required><br>
-	    Password: <input name="pw" id="pw" size="30" required><br>
+<!-- 	    Password: <input name="pw" id="pw" size="30" required><br> -->
 	    <br>
     	First Name:  <input name="fname" id="fname" size="20" required> <br>
     	Last Name: <input name="lname" id="lname" size="20" required><br>
