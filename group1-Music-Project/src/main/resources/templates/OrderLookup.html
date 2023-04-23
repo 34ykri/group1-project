@@ -15,7 +15,17 @@
             <li><a href="/ViewCart">Cart</a></li>
         </ul>
     </nav>
-	<div th:if="${ordersEmpty}">We have no orders at the moment</div>
+       <div th:if="${login}">
+    	<h1>Login</h1>
+		<div th:if="${invalidUser}">Invalid Email or Password</div>
+		<form th:object="${returningUser}" th:action="@{/OrderLookup}" method="POST" id="loginForm">
+			Email: <input name="email" id="email" size="20" th:field="*{email}" required> <br>
+			Password: <input name="password" id="password" size="20" th:field="*{password}" required> <br>
+			<button type="submit">Submit</button>
+		</form>
+    </div>
+    
+	<div th:if="${ordersEmpty}">No orders at the moment</div>
 	<div th:if="${ordersFull}">
 	<table>
 		<tr>
@@ -43,7 +53,8 @@
 			<td th:text="${order.zip}"></td>
 			<td th:text="${order.total}"></td>
 			<td th:text="${order.orderStatus}"></td>
-			<td><a th:href="@{/AdminViewOrder/{id}(id=${order.idOrderNumber})}">View Order</a></td>    	
+			<td><span th:if="${admin}"><a th:href="@{/AdminViewOrder/{id}(id=${order.idOrderNumber})}">View Order</a></span></td>    
+			<td><span th:if="${user}"><a th:href="@{/ViewOrder/{id}(id=${order.idOrderNumber})}">View Order</a></span></td>    	
 		</tr>
 	</table>
 </div>
