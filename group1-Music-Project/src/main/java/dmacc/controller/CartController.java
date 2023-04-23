@@ -47,43 +47,57 @@ public class CartController {
 	}
 	@GetMapping("/AddToCart/{id}")
 	public String AddToCart(@PathVariable("id") int id, Model model) {
-
+	
 		if(cartSessionId == null) {
 			cartSessionId = CartSessionID.createCartSessionID();
 		}
 		Product p = productRepo.findById(id).orElse(null);
 		//Id, brand, item, price
-		CartEntity ce =  new CartEntity(p.getId(), p.getBrand(), p.getItem(),p.getPrice());
+		CartEntity ce = cartRepo.findInCart(cartSessionId, id);
+		if(ce == null) {
+			ce =  new CartEntity(p.getId(), p.getBrand(), p.getItem(),p.getPrice());
+			ce.setQuantity(1);
+		}
+		else {
+			ce.setQuantity(ce.getQuantity()+1);
+		}
+
 		ce.setEntitySessionID(cartSessionId);
 
 		if(ce == null || p == null) {
-			return "AllProducts";
+			return "products";
 		}
 		
 		//Subtract from inventory
-		ce.setQuantity(ce.getQuantity()+1);
+;
 		cartRepo.save(ce);
 		productRepo.save(p);
-		return ViewCart(model);
+		model.addAttribute("addToCart", true);
+        model.addAttribute("products", productRepo.findAll());
+		return "products";
 	}
 	
 	@GetMapping("/RemoveFromCart/{id}")
 	public String RemoveFromCart(@PathVariable("id") int id, Model model) {
 		CartEntity ce = cartRepo.findById(id).orElse(null);
-		Product p = productRepo.findById(id).orElse(null);
+		
+		Product p = productRepo.findById(ce.getProductId()).orElse(null);
 		if(ce == null || p == null) {
-			return "AllProducts";
+			return "products";
 		}
 		//Re add inventory
 		p.setInventory(p.getInventory() + ce.getQuantity());
 		cartRepo.delete(ce);
 		productRepo.save(p);
-		return "Cart";
+		return ViewCart(model);
 	}
 
 	@GetMapping("/Checkout")
 	public String Checkout(Model model) {
 		Order o = new Order();
+		if(cartRepo.findItems(cartSessionId).isEmpty()) {
+			return "EmptyCart";
+		}
 		o.setItems(cartRepo.findItems(cartSessionId));
 		double tot = o.calculateTotal(cartRepo.findItems(cartSessionId));
 		o.setTotal(tot);
