@@ -68,10 +68,8 @@ public class OrderController {
 		
 		@PostMapping("/OrderLookup")
 		public String OrderLookup(@ModelAttribute User u, Model model) {
-			System.out.println("some");
 			User u2 = userRepo.findByEmail(u.getEmail());
 			if(u2 == null) {
-				System.out.println("nulls");
 				model.addAttribute("invalidUser", true);
 				model.addAttribute("newUser", u);
 				return "Register";
@@ -81,7 +79,6 @@ public class OrderController {
 //				model.addAttribute("invalidUser", true);
 //				return "OrderLookup";
 //			}
-			System.out.println(u2.getId());
 			if(orderRepo.findUserItems(u2.getId()).isEmpty()) {
 				model.addAttribute("ordersEmpty", true);
 				return "OrderLookup";
