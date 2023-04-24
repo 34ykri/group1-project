@@ -24,12 +24,6 @@
                     <a class="nav-link active" aria-current="page" th:href="@{/products}">Products</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/ViewAllProducts}">All Products</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/OrderLookup}">My Orders</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link active" aria-current="page" th:href="@{/ViewCart}">Cart</a>
                 </li>
                 <li class="nav-item">
@@ -41,6 +35,11 @@
 	            	<a class="nav-link active" aria-current="page" th:href="@{/register}">Create New Account</a>
 	            </li>
             </ul>
+             <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+      			<li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/OrderLookup}">My Orders</a>
+      			</li>
+      		</ul>
             <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
 	            <li class="nav-item">
 	            	<a class="nav-link active" aria-current="page" th:href="@{/logout}">Logout</a>
@@ -67,6 +66,7 @@
                         </div>
                         <p th:inline="text">$[[${currentProd.price}]]</p>
                         <a href="/product/1" class="btn btn-primary">View Details</a>
+                        <a th:href="@{/AddToCart/{id}(id=${currentProd.id})}" class="btn btn-primary">Add To Cart</a>
                     </div>
                 </div>
             </div>

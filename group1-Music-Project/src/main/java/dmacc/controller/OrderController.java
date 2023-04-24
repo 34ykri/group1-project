@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import dmacc.beans.CartEntity;
 import dmacc.beans.Order;
@@ -34,7 +33,7 @@ public class OrderController {
 	public String ViewAdminOrders(Model model) {
 		if(orderRepo.findAll().isEmpty()) {
 			model.addAttribute("ordersEmpty", true);
-			return "ViewAdminOrders";
+			return "OrderLookup";
 		}
 		model.addAttribute("ordersFull", true);
 		model.addAttribute("admin", true);
@@ -56,7 +55,17 @@ public class OrderController {
 		model.addAttribute("items", orderList);
 		return "AdminViewOrder";
 	}
-	
+	@GetMapping("/SetOrder/{id}/{status}")
+	public String SetOrder(@PathVariable("id") int orderId, @PathVariable("status") String status, Model model) {
+		Order o = orderRepo.findById(orderId).orElse(null);
+		o.setOrderStatus(status);
+		Integer sessionId = orderId;
+		List<CartEntity> orderList = cartRepo.findItems(sessionId.toString());
+		model.addAttribute("order", o);
+		model.addAttribute("items", orderList);
+		orderRepo.save(o);
+		return AdminViewOrder(orderId, model);
+	}
 	//For now logging in will redirect to Order lookup until Authentication is figured out
 		@GetMapping("/OrderLookup")
 		public String OrderLookup(Model model) {
