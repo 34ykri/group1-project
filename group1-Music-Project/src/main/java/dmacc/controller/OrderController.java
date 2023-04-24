@@ -17,6 +17,7 @@ import dmacc.repository.CartRepository;
 import dmacc.repository.OrderRepository;
 import dmacc.repository.ProductRepository;
 import dmacc.repository.UserRepo;
+import dmacc.service.UserService;
 
 @Controller
 public class OrderController {
@@ -28,7 +29,11 @@ public class OrderController {
 	UserRepo userRepo;
 	@Autowired
 	OrderRepository orderRepo;
-	
+	@Autowired
+    private UserService userService;
+	@Autowired
+	public AuthController authController;
+
 	@GetMapping("/ViewAdminOrders")
 	public String ViewAdminOrders(Model model) {
 		if(orderRepo.findAll().isEmpty()) {
@@ -79,9 +84,7 @@ public class OrderController {
 		public String OrderLookup(@ModelAttribute User u, Model model) {
 			User u2 = userRepo.findByEmail(u.getEmail());
 			if(u2 == null) {
-				model.addAttribute("invalidUser", true);
-				model.addAttribute("newUser", u);
-				return "Register";
+				return authController.showRegistrationForm(model);
 			}
 //			if(!u.getPassword().equals(u2.getPassword())) {
 //				model.addAttribute("returningUser", u);

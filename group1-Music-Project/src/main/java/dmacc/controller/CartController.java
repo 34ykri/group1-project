@@ -30,7 +30,8 @@ public class CartController {
 	UserRepo userRepo;
 	@Autowired
 	OrderRepository orderRepo;
-	
+	@Autowired
+	public AuthController authController;
 	String cartSessionId;
 
 	@GetMapping("/ViewCart")
@@ -114,17 +115,9 @@ public class CartController {
 		
 
 		if(u == null) {
-			User u2 = new User();
-			model.addAttribute("invalidUser", true);
-			model.addAttribute("newUser", u2);
-			return "Register";
+			return authController.showRegistrationForm(model);
 		}
-//		if(!u.getPassword().equals(o.getPw())) {
-//			model.addAttribute("userError", true);
-//			model.addAttribute("cart", cartRepo.findItems(cartSessionId));
-//			model.addAttribute("newOrder", o);
-//			return "Checkout";
-//		}
+		
 		List<CartEntity> orderCart = cartRepo.findItems(cartSessionId);
 		List<CartEntity> cart = cartRepo.findItems(cartSessionId);
 		if(orderCart.isEmpty()) {
