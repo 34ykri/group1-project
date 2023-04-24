@@ -6,11 +6,6 @@ import jakarta.persistence.Id;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * @author stephaniesink - sisink
- * CIS175 - Spring 2022
- * Apr 09, 2023
- */
 
 @Data
 @NoArgsConstructor

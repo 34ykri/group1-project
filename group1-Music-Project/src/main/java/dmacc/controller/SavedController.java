@@ -11,11 +11,6 @@ import dmacc.beans.SavedEntity;
 import dmacc.repository.ProductRepository;
 import dmacc.repository.SavedRepository;
 
-/**
- * @author stephaniesink - sisink
- * CIS175 - Spring 2022
- * Apr 09, 2023
- */
 @Controller
 public class SavedController {
 	
