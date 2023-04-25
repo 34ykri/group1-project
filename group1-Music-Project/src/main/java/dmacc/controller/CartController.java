@@ -32,6 +32,8 @@ public class CartController {
 	OrderRepository orderRepo;
 	@Autowired
 	public AuthController authController;
+	@Autowired
+	public OrderController orderController;
 	String cartSessionId;
 
 	@GetMapping("/ViewCart")
@@ -42,6 +44,15 @@ public class CartController {
 		if(cartRepo.findItems(cartSessionId).isEmpty()) {
 			return "EmptyCart";
 		}
+		double total = 0;
+		List<CartEntity> cart = cartRepo.findItems(cartSessionId);
+		for(int i = 0; i < cart.size(); i++) {
+			double price = Double.parseDouble(cart.get(i).getPrice());
+			price = price * cart.get(i).getQuantity();
+			total = total + price;
+		}
+		total = Math.round(total*100)/100.0;
+		model.addAttribute("total", total);
 		model.addAttribute("cart", cartRepo.findItems(cartSessionId));
 		return "Cart";
 		
@@ -70,14 +81,74 @@ public class CartController {
 		}
 		
 		//Subtract from inventory
-;
 		cartRepo.save(ce);
 		productRepo.save(p);
 		model.addAttribute("addToCart", true);
         model.addAttribute("products", productRepo.findAll());
 		return "products";
 	}
+	@GetMapping("/AddOne/{id}")
+	public String AddOne(@PathVariable("id") int id, Model model) {
 	
+		if(cartSessionId == null) {
+			cartSessionId = CartSessionID.createCartSessionID();
+		}
+		Product p = productRepo.findById(id).orElse(null);
+		//Id, brand, item, price
+		CartEntity ce = cartRepo.findInCart(cartSessionId, id);
+		if(ce == null) {
+			ce =  new CartEntity(p.getId(), p.getBrand(), p.getItem(),p.getPrice());
+			ce.setQuantity(1);
+		}
+		else {
+			ce.setQuantity(ce.getQuantity()+1);
+		}
+
+		ce.setEntitySessionID(cartSessionId);
+
+		if(ce == null || p == null) {
+			return ViewCart(model);
+		}
+		
+		//Subtract from inventory
+		cartRepo.save(ce);
+		productRepo.save(p);
+		model.addAttribute("addToCart", true);
+        model.addAttribute("products", productRepo.findAll());
+		return ViewCart(model);
+	}
+	@GetMapping("/RemoveOne/{id}")
+	public String RemoveOne(@PathVariable("id") int id, Model model) {
+		if(cartSessionId == null) {
+			cartSessionId = CartSessionID.createCartSessionID();
+		}
+		Product p = productRepo.findById(id).orElse(null);
+		//Id, brand, item, price
+		CartEntity ce = cartRepo.findInCart(cartSessionId, id);
+		if(ce == null) {
+			ce =  new CartEntity(p.getId(), p.getBrand(), p.getItem(),p.getPrice());
+			ce.setQuantity(1);
+		}
+		else {
+			ce.setQuantity(ce.getQuantity()-1);
+		}
+
+		ce.setEntitySessionID(cartSessionId);
+
+		if(ce == null || p == null) {
+			return ViewCart(model);
+		}
+		
+		
+		cartRepo.save(ce);
+		if(ce.getQuantity() == 0) {
+			cartRepo.delete(ce);
+		}
+		productRepo.save(p);
+		model.addAttribute("addToCart", true);
+        model.addAttribute("products", productRepo.findAll());
+		return ViewCart(model);
+	}
 	@GetMapping("/RemoveFromCart/{id}")
 	public String RemoveFromCart(@PathVariable("id") int id, Model model) {
 		CartEntity ce = cartRepo.findById(id).orElse(null);
@@ -101,6 +172,8 @@ public class CartController {
 		}
 		o.setItems(cartRepo.findItems(cartSessionId));
 		double tot = o.calculateTotal(cartRepo.findItems(cartSessionId));
+		tot = tot + (tot * .06);
+		tot = Math.round(tot*100)/100.0;
 		o.setTotal(tot);
 		model.addAttribute("cart", cartRepo.findItems(cartSessionId));
 		model.addAttribute("newOrder", o);
@@ -111,8 +184,9 @@ public class CartController {
 	public String Checkout(@ModelAttribute Order o, Model model) {
 		User u = userRepo.findByEmail(o.getOrderEmail());
 		double tot = o.calculateTotal(cartRepo.findItems(cartSessionId));
+		tot = Math.round(tot*100)/100.0;
 		o.setTotal(tot);
-		
+
 
 		if(u == null) {
 			return authController.showRegistrationForm(model);
@@ -145,7 +219,7 @@ public class CartController {
 			cartRepo.save(ce);
 		}
 		int id = o.getIdOrderNumber();
-		return ReturnOrder(id, model);
+		return orderController.ViewOrder(id, model);
 	}
 	
 	@GetMapping("/OrderConfirmation/")

@@ -86,11 +86,21 @@ public class OrderController {
 			if(u2 == null) {
 				return authController.showRegistrationForm(model);
 			}
-//			if(!u.getPassword().equals(u2.getPassword())) {
-//				model.addAttribute("returningUser", u);
-//				model.addAttribute("invalidUser", true);
-//				return "OrderLookup";
-//			}
+			if(orderRepo.findUserItems(u2.getId()).isEmpty()) {
+				model.addAttribute("ordersEmpty", true);
+				return "OrderLookup";
+			}
+			model.addAttribute("ordersFull", true);
+			model.addAttribute("user", true);
+			model.addAttribute("allOrders", orderRepo.findUserItems(u2.getId()));
+			return "OrderLookup";
+		}
+		@GetMapping("/OrderLookup/{userId}")
+		public String OrderLookup(@PathVariable("userId") int userId, Model model) {
+			User u2 = userRepo.findId(userId);
+			if(u2 == null) {
+				return authController.showRegistrationForm(model);
+			}
 			if(orderRepo.findUserItems(u2.getId()).isEmpty()) {
 				model.addAttribute("ordersEmpty", true);
 				return "OrderLookup";
