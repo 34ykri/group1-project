@@ -46,8 +46,9 @@ public class Order {
 		double calTotal = 0;
 		for(int i = 0; i < theseItems.size(); i++) {
 			CartEntity thisItem = theseItems.get(i);
-			double itemPrice = Double.parseDouble(thisItem.getPrice());
-			calTotal = calTotal + itemPrice;
+			double itemPrice =  Double.parseDouble(thisItem.getPrice());
+			double itemTotalPrice = itemPrice * thisItem.getQuantity();
+			calTotal = calTotal + itemTotalPrice;
 		}
 		return calTotal;
 	}
