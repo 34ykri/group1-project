@@ -72,6 +72,9 @@
         <td th:text="${item.quantity}"></td>
   </tr>
 </table>
+<div class="text-center">
+<a class="btn btn-success" th:href="@{/OrderLookup/{userId}(userId=${order.userId})}">Back to My Orders</a>
+</div>
 </div>
 </body>
 </html>
