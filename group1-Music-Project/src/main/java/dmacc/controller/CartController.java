@@ -189,7 +189,11 @@ public class CartController {
 
 
 		if(u == null) {
-			return authController.showRegistrationForm(model);
+			model.addAttribute("userError", true);
+			model.addAttribute("cart", cartRepo.findItems(cartSessionId));
+			model.addAttribute("newOrder", o);
+			model.addAttribute("total", tot);
+			return "Checkout";
 		}
 		
 		List<CartEntity> orderCart = cartRepo.findItems(cartSessionId);
