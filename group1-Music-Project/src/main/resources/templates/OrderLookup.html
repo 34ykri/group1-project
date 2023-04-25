@@ -60,18 +60,21 @@
 <div class="container">
        <div th:if="${login}">
            <br />
-    	<h1>Login</h1>
-		<div th:if="${invalidUser}">Invalid Email or Password</div>
+    	<h1>Login to Orders Page</h1>
+		<div th:if="${invalidUser}">Invalid Email		</div>
 		<form th:object="${returningUser}" th:action="@{/OrderLookup}" method="POST" id="loginForm">
 			Email: <input name="email" id="email" size="20" th:field="*{email}" required>
 <!-- 			Password: <input name="password" id="password" size="20" th:field="*{password}" required> <br> -->
 			<button type="submit">Submit</button>
 		</form>
+		<a href="/register">Register an Account</a><br />
     </div>
 </div>
     <div class="container">
     <br />
-	<div th:if="${ordersEmpty}">No orders at the moment</div>
+	<div class="text-center" th:if="${ordersEmpty}"><h1>No orders at the moment</h1>
+	<a class="btn btn-success" href="/products">View Products</a>
+	</div>
 	<div th:if="${ordersFull}">
 	    <h1>All Orders</h1>
 	

@@ -84,7 +84,10 @@ public class OrderController {
 		public String OrderLookup(@ModelAttribute User u, Model model) {
 			User u2 = userRepo.findByEmail(u.getEmail());
 			if(u2 == null) {
-				return authController.showRegistrationForm(model);
+				model.addAttribute("invalidUser", true);
+				model.addAttribute("login", true);
+				return OrderLookup(model);
+
 			}
 			if(orderRepo.findUserItems(u2.getId()).isEmpty()) {
 				model.addAttribute("ordersEmpty", true);
