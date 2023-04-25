@@ -205,7 +205,6 @@ public class CartController {
 		o.setPw("");
 		orderRepo.save(o);
 		Integer sessionId = o.getIdOrderNumber();
-		//System.out.println(sessionId);
 		//Subtract from Inventory
 		for(int i = 0; i < cart.size(); i++) {
 			CartEntity ce = cart.get(i);
@@ -215,7 +214,6 @@ public class CartController {
 				productRepo.save(p);
 			}
 			ce.setEntitySessionID(sessionId.toString());
-			//System.out.println("esid " + ce.getEntitySessionID());
 			cartRepo.save(ce);
 		}
 		int id = o.getIdOrderNumber();

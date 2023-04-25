@@ -65,7 +65,7 @@
                             <p th:text="${currentProd.description}">Description</p>
                         </div>
                         <p th:inline="text">$[[${currentProd.price}]]</p>
-                        <a href="/product/1" class="btn btn-primary">View Details</a>
+<!--                         <a href="/product/1" class="btn btn-primary">View Details</a> -->
                         <a th:href="@{/AddToCart/{id}(id=${currentProd.id})}" class="btn btn-primary">Add To Cart</a>
                     </div>
                 </div>
