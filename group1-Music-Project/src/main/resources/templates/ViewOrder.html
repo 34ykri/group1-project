@@ -34,7 +34,7 @@
             </ul>
             <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
       			<li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/OrderLookup}">My Orders</a>
+                    <a class="nav-link active" aria-current="page" th:href="@{/OrderLookup/{userId}(userId=${order.userId})}">My Orders</a>
       			</li>
       		</ul>
             <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
@@ -51,11 +51,13 @@
     </div>
 </nav>
 <div class="container">
-<h1>Thank you for your Order!</h1>
+<br />
+<h1 class="text-success">Thank you for your Order!</h1>
 <h2>Order Number : <span th:text="${order.idOrderNumber}"></span></h2>
 <h2>Order Status : <span th:text="${order.orderStatus}"></span></h2>
-<table>
-	<tr>
+<h3>Total: $<span th:text="${order.total}"></span></h3>
+<table class="table table-hover">
+	<tr class="table-dark">
 		<th>Product Id</th>
         <th>Item Name</th>
         <th>Brand</th>
@@ -70,6 +72,9 @@
         <td th:text="${item.quantity}"></td>
   </tr>
 </table>
+<div class="text-center">
+<a class="btn btn-success" th:href="@{/OrderLookup/{userId}(userId=${order.userId})}">Back to My Orders</a>
+</div>
 </div>
 </body>
 </html>

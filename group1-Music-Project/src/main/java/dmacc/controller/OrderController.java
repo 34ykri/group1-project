@@ -84,13 +84,26 @@ public class OrderController {
 		public String OrderLookup(@ModelAttribute User u, Model model) {
 			User u2 = userRepo.findByEmail(u.getEmail());
 			if(u2 == null) {
+				model.addAttribute("invalidUser", true);
+				model.addAttribute("login", true);
+				return OrderLookup(model);
+
+			}
+			if(orderRepo.findUserItems(u2.getId()).isEmpty()) {
+				model.addAttribute("ordersEmpty", true);
+				return "OrderLookup";
+			}
+			model.addAttribute("ordersFull", true);
+			model.addAttribute("user", true);
+			model.addAttribute("allOrders", orderRepo.findUserItems(u2.getId()));
+			return "OrderLookup";
+		}
+		@GetMapping("/OrderLookup/{userId}")
+		public String OrderLookup(@PathVariable("userId") int userId, Model model) {
+			User u2 = userRepo.findId(userId);
+			if(u2 == null) {
 				return authController.showRegistrationForm(model);
 			}
-//			if(!u.getPassword().equals(u2.getPassword())) {
-//				model.addAttribute("returningUser", u);
-//				model.addAttribute("invalidUser", true);
-//				return "OrderLookup";
-//			}
 			if(orderRepo.findUserItems(u2.getId()).isEmpty()) {
 				model.addAttribute("ordersEmpty", true);
 				return "OrderLookup";

@@ -26,6 +26,12 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" th:href="@{/Checkout}">Checkout</a>
                 </li>
+                 <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/AddProduct}">Add Product</a>
+                </li>
+                 <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/ViewAdminOrders}">View Admin Orders</a>
+                </li> 
             </ul>
             <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
 	            <li class="nav-item">
@@ -51,10 +57,11 @@
     </div>
 </nav>
 <div class="container">
+<br />
 <h1>Admin: Viewing Order</h1>
 <h2>Order Number : <span th:text="${order.idOrderNumber}"></span></h2>
 <h2>Order Status : <span th:text="${order.orderStatus}"></span></h2>
-<table>
+<table class="table table-hover">
 	<tr>
 		<th>Product Id</th>
         <th>Item Name</th>
@@ -71,11 +78,11 @@
   </tr>
 </table>
 <h2>Set Order Status</h2>
-<a th:href="@{/SetOrder/{id}/{status}(id=${order.idOrderNumber}, status='Processing')}">Processing</a>
-<a th:href="@{/SetOrder/{id}/{status}(id=${order.idOrderNumber}, status='Cancelled')}">Cancelled</a>
-<a th:href="@{/SetOrder/{id}/{status}(id=${order.idOrderNumber}, status='Shipped')}">Shipped</a>
-<a th:href="@{/SetOrder/{id}/{status}(id=${order.idOrderNumber}, status='Delivered')}">Delivered</a>
-<a th:href="@{/SetOrder/{id}/{status}(id=${order.idOrderNumber}, status='Delayed Shipment')}">Delayed Shipment</a>
+<a class="btn btn-secondary" th:href="@{/SetOrder/{id}/{status}(id=${order.idOrderNumber}, status='Processing')}">Processing</a>
+<a class="btn btn-danger" th:href="@{/SetOrder/{id}/{status}(id=${order.idOrderNumber}, status='Cancelled')}">Cancelled</a>
+<a class="btn btn-primary"th:href="@{/SetOrder/{id}/{status}(id=${order.idOrderNumber}, status='Shipped')}">Shipped</a>
+<a class="btn btn-success" th:href="@{/SetOrder/{id}/{status}(id=${order.idOrderNumber}, status='Delivered')}">Delivered</a>
+<a class="btn btn-warning" th:href="@{/SetOrder/{id}/{status}(id=${order.idOrderNumber}, status='Delayed Shipment')}">Delayed Shipment</a>
 </div>
 </body>
 </html>

@@ -51,23 +51,30 @@
     </div>
 </nav>
 <div class="container">
-    <table>
+<br />
+	<h1 class="text-center">My Cart</h1>
+	<h2 class="text-center">Subtotal: $<span th:text="${total}"></span></h2>
+<table class="table table-hover">
     	<tr>
-    		<th>brand</th>
-    		<th>item</th>
-    		<th>price</th>
-    		<th>quantity</th>
+    		<th>Brand</th>
+    		<th>Item</th>
+    		<th>Price</th>
+    		<th>Quantity</th>
     	</tr>
     	<tr th:each="currentCart : ${cart}">
     	    <td th:text="${currentCart.brand}"></td>
     	    <td th:text="${currentCart.item}"></td>
     	    <td th:text="${currentCart.price}"></td>
     	    <td th:text="${currentCart.quantity}"></td>
-    	    
-    		<td><a th:href="@{/RemoveFromCart/{id}(id=${currentCart.id})}">Remove</a></td>  
+    		<td><a th:href="@{/RemoveFromCart/{id}(id=${currentCart.id})}">Remove All</a></td>
+    		<td><a th:href="@{/AddOne/{id}(id=${currentCart.productId})}">Add One</a></td>  
+    		<td><a th:href="@{/RemoveOne/{id}(id=${currentCart.productId})}">Remove One</a></td>  
+    		
 		</tr>
     </table>
-   	<a href="/Checkout">Checkout</a>
+    <div class="text-center">
+   	<a class="btn btn-success" href="/Checkout">Checkout</a>
+   	</div>
    	</div>
 </body>
 </html>
