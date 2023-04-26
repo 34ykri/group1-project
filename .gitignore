@@ -2,4 +2,4 @@
 .class
 persistence.xml
 .project
-*.properties
+**.properties
