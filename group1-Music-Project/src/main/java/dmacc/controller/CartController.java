@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import dmacc.beans.CartEntity;
 import dmacc.beans.CartSessionID;
@@ -185,11 +186,13 @@ public class CartController {
 	}
 	
 	@PostMapping("/Checkout")
-	public String Checkout(@ModelAttribute Order o, Model model) {
+	public String Checkout(@RequestParam("month") String month, @RequestParam("year") String year, @ModelAttribute Order o, Model model) {
 		User u = userRepo.findByEmail(o.getOrderEmail());
 		double tot = o.calculateTotal(cartRepo.findItems(cartSessionId));
+		
 		tot = Math.round(tot*100)/100.0;
 		o.setTotal(tot);
+		o.setExpirationDate(month + "/" + year);
 
 
 		if(u == null) {

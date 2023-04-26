@@ -47,13 +47,10 @@ public class Order {
 		
 		for(int i = 0; i < theseItems.size(); i++) {
 			CartEntity thisItem = theseItems.get(i);
-			String itemPrice = thisItem.getPrice();
 
-			itemPrice = itemPrice.replace("$", "");
-			
-			double price = Double.parseDouble(itemPrice);
-			
-			calTotal = price;
+			double itemPrice =  Double.parseDouble(thisItem.getPrice());
+			double itemTotalPrice = itemPrice * thisItem.getQuantity();
+			calTotal = calTotal + itemTotalPrice;
 		}
 		return calTotal;
 	}
