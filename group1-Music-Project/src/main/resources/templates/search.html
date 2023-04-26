@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Search Results</title>
+    <link rel="stylesheet" type="text/css" href="/css/homepage.css">
+</head>
+
+<body>
+	<nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/">Order Lookup</a></li>
+            <li><a href="/Register">Register</a>
+            <li><a href="/ContactUs">Contact</a></li>
+            <li><a href="/ViewAllProducts">View All Products</a></li>
+            <li><a href="/ViewCart">Cart</a></li>
+        </ul>
+    </nav>
+    
+ <form th:action="@{/search}" method="post">
+ Search: 
+  <input type="text" name="keyword" th:value="${keyword}"  placeholder="Search Again" size="75" required />
+  <input type = "submit" value = "Search" />
+  <input type = "button" value = "Clear" onclick = "clearSearch()"/>
+ </form>
+ 
+ 
+    <table>
+    	<th> BRAND </th>
+    	<th> ITEM </th>
+    	<th> PRICE </th>
+    	<tr th:each="product:${product}">
+    	    <td th:text="${product.brand}"></td>
+    	    <td th:text="${product.item}"></td>
+    	    <td th:text="${product.price}"></td>  
+		</tr>
+    </table>
+    
+<script type = "text/javascript" >
+	function clearSearch() {
+		window.location = '/ViewAllProducts';
+	}
+</script>
+
+</body>
+</html>
