@@ -32,6 +32,9 @@
 						<a class="nav-link active" aria-current="page" th:href="@{/AddProduct}">Add Product</a>
 					</li>
 					<li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/AdminProducts}">Edit Product</a>
+                </li>
+					<li class="nav-item">
 						<a class="nav-link active" aria-current="page" th:href="@{/ViewAdminOrders}">View Admin
 							Orders</a>
 					</li>
@@ -54,7 +57,7 @@
 			</div>
 		</div>
 	</nav>
-	<div class="container">
+	<div th:if="${add}" class="container" >
 		<br>
 		<h1>Add a Product</h1>
 		<form th:object="${NewProduct}" th:action="@{/AddProduct}" method="POST" id="addProductForm">
@@ -100,7 +103,101 @@
 		<a class="btn btn-primary" href="/products">All Products</a>
 		<br>
 	</div>
-
+<div th:if="${edit}" class="container" >
+		<br>
+		<h1>Edit Product</h1>
+		<form th:object="${editProduct}" th:action="@{/EditProduct}" method="POST" id="editProductForm">
+			<input type="hidden" name="id" id="id" th:field="*{id}" required/>
+			<div class="form-group">
+				<div class="col-md-6">
+					Type: <input name="type" id="type" size="20" th:field="*{type}" class="form-control" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-6">
+					Brand: <input name="brand" id="branch" size="20" th:field="*{brand}" class="form-control" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-6">
+					Item Name: <input name="item" id="item" size="30" th:field="*{item}" class="form-control" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-2">
+					Inventory: <input name="inventory" id="inventory" size="30" th:field="*{inventory}"
+						class="form-control" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-2">
+					Price: <input name="price" id="price" size="6" th:field="*{price}" class="form-control" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-6">
+					Description: <br><textarea name="desc" id="desc" cols="30" rows="6" th:field="*{description}"
+						class="form-control" required></textarea>
+				</div>
+			</div>
+			<br>
+			<div class="form-group">
+			<button class="btn btn-success" type="submit">Submit</button>
+			</div>
+		</form>
+		<br>
+		<a class="btn btn-primary" href="/index">Home Page</a>
+		<a class="btn btn-primary" href="/AdminProducts">Back to Edit Products</a>
+		<br>
+	</div>
+	<div th:if="${delete}" class="container" >
+		<br>
+		<h1>Delete Product</h1>
+		<h2 class="text-danger">Are you sure you want to delete this Product?</h2>
+		<form th:object="${deleteProduct}" th:action="@{/DeleteProduct}" method="POST" id="DeleteProductForm">
+			<input type="hidden" name="id" id="id" th:field="*{id}" readonly/>
+			<div class="form-group">
+				<div class="col-md-6">
+					Type: <input name="type" id="type" size="20" th:field="*{type}" class="form-control" readonly>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-6">
+					Brand: <input name="brand" id="branch" size="20" th:field="*{brand}" class="form-control" readonly>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-6">
+					Item Name: <input name="item" id="item" size="30" th:field="*{item}" class="form-control" readonly>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-2">
+					Inventory: <input name="inventory" id="inventory" size="30" th:field="*{inventory}"
+						class="form-control" readonly>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-2">
+					Price: <input name="price" id="price" size="6" th:field="*{price}" class="form-control" readonly>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-6">
+					Description: <br><textarea name="desc" id="desc" cols="30" rows="6" th:field="*{description}"
+						class="form-control" readonly></textarea>
+				</div>
+			</div>
+			<br>
+			<div class="form-group">
+			<button class="btn btn-danger" type="submit">Delete</button>
+			</div>
+		</form>
+		<br>
+		<a class="btn btn-primary" href="/index">Home Page</a>
+		<a class="btn btn-primary" href="/AdminProducts">Back to Edit Products</a>
+		<br>
+	</div>
 
 </body>
 

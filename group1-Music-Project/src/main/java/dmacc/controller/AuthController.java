@@ -58,6 +58,14 @@ public class AuthController {
         return "products";
     }
     
+    @GetMapping("AdminProducts")
+    public String AdminShowProductsForm(Model model) {
+    	UserDto user = new UserDto();
+    	model.addAttribute("user", user);
+        model.addAttribute("products", productRepo.findAll());
+        return "AdminProducts";
+    }
+    
     @GetMapping("adminLogin")
     public String adminLogin() {
         adminUserService.createPresetAdminUser();
