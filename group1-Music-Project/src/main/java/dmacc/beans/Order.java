@@ -1,16 +1,11 @@
 package dmacc.beans;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -44,18 +39,17 @@ public class Order {
 	private String orderStatus;
 	private String pw;
 	
-	@OneToMany(cascade=CascadeType.MERGE, fetch=FetchType.EAGER, mappedBy="order")
+	@OneToMany(cascade=CascadeType.MERGE, fetch=FetchType.LAZY, mappedBy="order")
 	public List<CartEntity> items;
 	
 	public double calculateTotal(List<CartEntity> theseItems) {
 		double calTotal = 0;
 		for(int i = 0; i < theseItems.size(); i++) {
 			CartEntity thisItem = theseItems.get(i);
-			double itemPrice = Double.parseDouble(thisItem.getPrice());
-			calTotal = calTotal + itemPrice;
+			double itemPrice =  Double.parseDouble(thisItem.getPrice());
+			double itemTotalPrice = itemPrice * thisItem.getQuantity();
+			calTotal = calTotal + itemTotalPrice;
 		}
 		return calTotal;
 	}
-	
-	
 }

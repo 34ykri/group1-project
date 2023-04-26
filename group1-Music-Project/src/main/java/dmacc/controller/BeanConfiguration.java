@@ -16,6 +16,8 @@ public class BeanConfiguration {
         return product;
     }
 
+
+
     @Bean
     User user() {
         User user = new User();
@@ -31,5 +33,4 @@ public class BeanConfiguration {
     	Order order = new Order();
     	return order;
     }
-    
 }

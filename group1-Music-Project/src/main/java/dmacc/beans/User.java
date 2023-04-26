@@ -1,36 +1,43 @@
 package dmacc.beans;
 
-
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name="users")
 public class User {
-
-    @Column(name = "ID")
+	
+	private static final long serialVersionUID = 1L;
+    
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable=false)
     private int id;
 
-    @Column(name = "FIRSTNAME")
-    private String firstName;
+    @Column(nullable=false)
+    private String name;
 
-    @Column(name = "LASTNAME")
-    private String lastName;
-
-    @Column(name = "EMAIL")
+    @Column(nullable=false, unique=true)
     private String email;
     
-    @Column(name = "PASSWORD")
+    @Column(nullable=false)
     private String password;
-    @Column(name = "CONFIRM_PW")
-    private String confirmPW;
+    
+    @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    @JoinTable(name="users_roles",
+            joinColumns={@JoinColumn(name="USER_ID", referencedColumnName="ID")},
+            inverseJoinColumns={@JoinColumn(name="ROLE_ID", referencedColumnName="ID")})
+    private List<Role> roles = new ArrayList<>();
     
 //    @Column(name = "USER_ORDERS")
 //	  @OneToMany(cascade=CascadeType.MERGE, fetch=FetchType.EAGER)

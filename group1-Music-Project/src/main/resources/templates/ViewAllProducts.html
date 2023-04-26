@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Products</title>
+    <link rel="stylesheet" type="text/css" href="/css/homepage.css">
+</head>
+<body>
+<nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/">Order Lookup</a></li>
+            <li><a href="/Register">Register</a>
+            <li><a href="#">Contact</a></li>
+            <li><a href="/ViewAllProducts">View All Products</a></li>
+            <li><a href="/ViewCart">Cart</a></li>
+        </ul>
+    </nav>
+    <table>
+    	<tr>
+    		<th>item</th>
+    		<th>inventory</th>
+    		<th>price</th>
+    	</tr>
+        <tr th:each="currentProduct : ${products}">
+        	<td th:text="${currentProduct.item}"></td>
+        	<td th:text="${currentProduct.inventory}"></td>
+        	<td th:text="${currentProduct.price}"></td>
+			<td><a th:href="@{/AddToCart/{id}(id=${currentProduct.id})}">Add to Cart</a></td>    	
+        </tr>
+    </table>
+</body>
+</html>

@@ -4,11 +4,13 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+
 @Entity
 public class Product {
 
@@ -38,5 +40,11 @@ public class Product {
     @Column(name = "INVENTORY")
     private int inventory;
 
-
+    public Product(String brand, String item, String type, String price, String description) {
+        this.brand = brand;
+        this.item = item;
+        this.type = type;
+        this.price = price;
+        this.description = description;
+    }
 }
