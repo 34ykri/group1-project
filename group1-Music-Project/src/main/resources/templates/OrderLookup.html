@@ -22,7 +22,7 @@
                     <a class="nav-link active" aria-current="page" th:href="@{/products}">Products</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/ViewCart}">Cart</a>
+                    <a class="nav-link active" aria-current="page" th:href="@{/ViewCart}">Shopping Cart</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" th:href="@{/Checkout}">Checkout</a>
@@ -60,14 +60,15 @@
 <div class="container">
        <div th:if="${login}">
            <br />
-    	<h1>Login to Orders Page</h1>
+    	<h2>Enter Your Email to View All Orders</h2>
 		<div th:if="${invalidUser}">Invalid Email		</div>
 		<form th:object="${returningUser}" th:action="@{/OrderLookup}" method="POST" id="loginForm">
 			Email: <input name="email" id="email" size="20" th:field="*{email}" required>
 <!-- 			Password: <input name="password" id="password" size="20" th:field="*{password}" required> <br> -->
-			<button type="submit">Submit</button>
+			<button type="submit" class="btn btn-primary">Submit</button>
 		</form>
-		<a href="/register">Register an Account</a><br />
+		<br>
+		<p class="lead">Not a Registered User? <span><a href="/register">Register an Account</a></span></p>
     </div>
 </div>
     <div class="container">

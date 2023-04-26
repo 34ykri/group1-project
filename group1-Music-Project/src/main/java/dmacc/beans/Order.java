@@ -44,10 +44,16 @@ public class Order {
 	
 	public double calculateTotal(List<CartEntity> theseItems) {
 		double calTotal = 0;
+		
 		for(int i = 0; i < theseItems.size(); i++) {
 			CartEntity thisItem = theseItems.get(i);
-			double itemPrice = Double.parseDouble(thisItem.getPrice());
-			calTotal = calTotal + itemPrice;
+			String itemPrice = thisItem.getPrice();
+
+			itemPrice = itemPrice.replace("$", "");
+			
+			double price = Double.parseDouble(itemPrice);
+			
+			calTotal = price;
 		}
 		return calTotal;
 	}

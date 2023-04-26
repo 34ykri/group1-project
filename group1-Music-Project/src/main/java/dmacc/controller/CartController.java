@@ -44,13 +44,17 @@ public class CartController {
 		if(cartRepo.findItems(cartSessionId).isEmpty()) {
 			return "EmptyCart";
 		}
+		
 		double total = 0;
 		List<CartEntity> cart = cartRepo.findItems(cartSessionId);
+		
 		for(int i = 0; i < cart.size(); i++) {
-			double price = Double.parseDouble(cart.get(i).getPrice());
+			String priceStr = cart.get(i).getPrice().replace("$", "");
+			double price = Double.parseDouble(priceStr);
 			price = price * cart.get(i).getQuantity();
 			total = total + price;
 		}
+		
 		total = Math.round(total*100)/100.0;
 		model.addAttribute("total", total);
 		model.addAttribute("cart", cartRepo.findItems(cartSessionId));

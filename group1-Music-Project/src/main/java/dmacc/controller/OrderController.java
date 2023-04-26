@@ -71,9 +71,12 @@ public class OrderController {
 		orderRepo.save(o);
 		return AdminViewOrder(orderId, model);
 	}
+	
+	
 	//For now logging in will redirect to Order lookup until Authentication is figured out
 		@GetMapping("/OrderLookup")
 		public String OrderLookup(Model model) {
+			
 			User u = new User();
 			model.addAttribute("login", true);
 			model.addAttribute("returningUser", u);
@@ -82,6 +85,7 @@ public class OrderController {
 		
 		@PostMapping("/OrderLookup")
 		public String OrderLookup(@ModelAttribute User u, Model model) {
+			
 			User u2 = userRepo.findByEmail(u.getEmail());
 			if(u2 == null) {
 				model.addAttribute("invalidUser", true);
@@ -100,6 +104,7 @@ public class OrderController {
 		}
 		@GetMapping("/OrderLookup/{userId}")
 		public String OrderLookup(@PathVariable("userId") int userId, Model model) {
+			
 			User u2 = userRepo.findId(userId);
 			if(u2 == null) {
 				return authController.showRegistrationForm(model);
