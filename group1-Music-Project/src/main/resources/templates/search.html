@@ -18,10 +18,11 @@
         </ul>
     </nav>
     
- <form th:action="@{/findByKeyword}" method="get">
-  <input type="text" name="keyword" th:value="${keyword}"  placeholder="Search Again" size="50" >
-  <button type="submit" class="btn btn-info" >Search</button>
-  <button type="submit" class="btn btn-info" >Reset</button>
+ <form th:action="@{/search}" method="post">
+ Search: 
+  <input type="text" name="keyword" th:value="${keyword}"  placeholder="Search Again" size="75" required />
+  <input type = "submit" value = "Search" />
+  <input type = "button" value = "Clear" onclick = "clearSearch()"/>
  </form>
  
  
@@ -29,11 +30,18 @@
     	<th> BRAND </th>
     	<th> ITEM </th>
     	<th> PRICE </th>
-    	<tr th:each="currentSaved : ${saved}">
-    	    <td th:text="${currentSaved.brand}"></td>
-    	    <td th:text="${currentSaved.item}"></td>
-    	    <td th:text="${currentSaved.price}"></td>  
+    	<tr th:each="prodcut:${product}">
+    	    <td th:text="${product.brand}"></td>
+    	    <td th:text="${product.item}"></td>
+    	    <td th:text="${product.price}"></td>  
 		</tr>
     </table>
+    
+<script type = "text/javascript" >
+	function clearSearch() {
+		window.location = '/ViewAllProducts';
+	}
+</script>
+
 </body>
 </html>

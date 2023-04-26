@@ -24,10 +24,10 @@
         </ul>
     </nav>
     
-  <form th:action="@{/findByKeyword}" method="get">
-  	<input type="text" name="keyword" th:value="${keyword}"  placeholder="Find Product" size="50" >
-  	<button type="submit" >Search</button>
-  	<button type="submit" >Reset</button>
+  <form th:action="@{/}" method="get">
+  	<input type="text" name="keyword" th:value="${keyword}"  placeholder="Find Product" size="75" required/>
+  	<button type="submit" value = "Search">Search</button>
+  	<button type="button" value = "Clear">Clear</button>
   </form>
   
     <table>
