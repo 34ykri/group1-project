@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Contact Us</title>
+    <link rel="stylesheet" type="text/css" href="/css/homepage.css">
+</head>
+<body>
+	<nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/">Order Lookup</a></li>
+            <li><a href="/Register">Register</a>
+            <li><a href="/ContactUs">Contact</a></li>
+            <li><a href="/ViewAllProducts">View All Products</a></li>
+            <li><a href="/ViewCart">Cart</a></li>
+        </ul>
+    </nav>
+    
+ <h1>Contact Customer Support</h1>
+ <p>If you have questions or feedback about an order, product, or registering, please let us know.</p>
+ <br>
+ <h2>How can we help? </h2>
+    
+<form th:object="${contact}" th:action="ContactUs" th:method="post">
+
+	<label for = "firstName">First Name: </label><br>
+	<input type = "text" th:field="*{firstName}" size="45"/>
+	<br>
+	<label for = "lastName">Last Name: </label><br>
+	<input type = "text" th:field="*{lastName}" size="45"/>
+	<br>
+	<label for = "email">Email: </label><br>
+	<input type = "email" th:field="*{email}" size="45"/>
+	<br>
+	<br>
+	<label for="question">Question or Comments: </label>
+	<br>
+	<textarea id="message" name="message" placeholder="Enter question or comment here" style="height:100px"></textarea>
+	<br>
+	<button type="submit">Submit</button>
+	<br>
+	<br>
+	<h1 th:text="${submitMessage}">message</h1>
+</form>
+
+</body>
+</html>
