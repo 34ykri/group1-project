@@ -20,7 +20,18 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/register}">Create An Account</a>
+                    <a class="nav-link active" aria-current="page" th:href="@{/products}">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/Checkout}">Shopping Cart</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/Checkout}">Checkout</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/register}">Sign Up</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" th:href="@{/login}">Login</a>
@@ -28,8 +39,6 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" th:href="@{/logout}">Logout</a>
                 </li>
-            </ul>
-            <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" th:href="@{/adminLogin}">Admin</a>
                 </li>
@@ -38,17 +47,49 @@
     </div>
 </nav>
 <br /><br />
-<div class="container">
+<div class="container mt-5">
     <div class="row">
-        <h1 class="text-center"> My Music Store </h1>
-        <h3 class="text-center">Your one-stop destination for all your musical needs</h3>
-            <a href="/login" class="text-center">Login</a>
-            <a href="/register" class="text-center">Register New Account</a>
+        <div class="col-md-3">
+        	<h3>Mission & Vision</h3>
+            <p class="lead">My Music Store was founded in 2023 with the main purpose of being
+                    a one-stop destination for all music lovers. We strive to serve musicians from all over the
+                    world, providing them with top-quality instruments and exceptional customer service.</p>
+                <p class="lead">We hope to grow into a leading online music store, offering a wide range of instruments,
+                    accessories, and services. Our commitment to customer satisfaction and our passion for music continues to
+                    drive us in delivering the best possible experience to our customers.</p>
+
+        </div>
+        <div class="col-md-9">
+            <h1 class="text-center"> Welcome to My Music Store </h1>
+            <h3 class="text-center">Your one-stop destination for all your musical needs</h3>
+            <p class="lead text-center">Find your favorite instruments and enjoy the best shopping experience.</p>
+            <section class="container mt-5">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>About Us</h2>
+                        <p class="lead">We are an online platform that offers a wide range of musical instruments,
+                         accessories, and services for all kinds of musicians. Our mission is to provide the best music experience
+                          to our customers by offering high-quality instruments from popular brands and models.</p>
+                        <p class="lead">Here, you can easily browse and search for your favorite instruments,
+                         create your personal shopping cart, and purchase the instrument of your dreams from a
+                          wide variety of products. Our user-friendly interface makes it easy to view each and 
+                          every one of our products and quickly add them to your cart.</p>
+                    </div>
+                </div>
+                
+            <div>
+            	<p class="lead">Want to become a member? <span><a href="/register">Register</a></span></p>
+            	<p class="lead">Already a user? <span><a href="/login">Login</a></span></p>
+            	<p class="lead">View All Products - <span><a href="/products">Products</a></span></p>
+            </div>
+            </section>
+        </div>
     </div>
     <br>
-    <div class="footer text-center">
-        <p>&copy; 2023 Music Store. All rights reserved.</p>
+    <div class="footer text-left">
+        <p>&copy; 2023 My Music Store. All Rights Reserved.</p>
     </div>
 </div>
 </body>
+
 </html>

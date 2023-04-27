@@ -24,7 +24,7 @@
                     <a class="nav-link active" aria-current="page" th:href="@{/products}">Products</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/ViewCart}">Cart</a>
+                    <a class="nav-link active" aria-current="page" th:href="@{/ViewCart}">Shopping Cart</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" th:href="@{/Checkout}">Checkout</a>
@@ -65,7 +65,7 @@
                         <div class="description">
                             <p th:text="${currentProd.description}">Description</p>
                         </div>
-                        <p th:inline="text">$[[${currentProd.price}]]</p>
+                        <p th:inline="text">[[${currentProd.price}]]</p>
 <!--                         <a href="/product/1" class="btn btn-primary">View Details</a> -->
                         <a th:href="@{/AddToCart/{id}(id=${currentProd.id})}" class="btn btn-success">Add To Cart</a>
                     </div>
