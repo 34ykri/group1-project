@@ -9,6 +9,7 @@
           rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
           crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/products.css">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -31,7 +32,7 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" th:href="@{/AddProduct}">Add Product</a>
                 </li>
-                 <li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link active" aria-current="page" th:href="@{/AdminProducts}">Edit Product</a>
                 </li>
                 <li class="nav-item">
@@ -56,26 +57,30 @@
         </div>
     </div>
 </nav>
-<div class="container">
-    <div class="row col-md-10">
-        <h2>List of Registered Customers</h2>
+
+    <div class="container">
+    <br />
+        <h1 class="text-center">Admin View Products</h1>
+        <div class="row">
+            <div class="col-md-4" th:each="currentProd : ${products}">
+                <div class="product-card">
+                    <div class="card-body">
+                        <h5 th:text="${currentProd.item}">Product</h5>
+                        <div class="description">
+                            <p th:text="${currentProd.description}">Description</p>
+                        </div>
+                        <p th:inline="text">$[[${currentProd.price}]]</p>
+<!--                         <a href="/product/1" class="btn btn-primary">View Details</a> -->
+                        <a th:href="@{/EditProduct/{id}(id=${currentProd.id})}" class="btn btn-warning">Edit</a>
+                        <a th:href="@{/DeleteProduct/{id}(id=${currentProd.id})}" class="btn btn-danger">Delete</a>  
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <table class="table table-bordered table-hover">
-        <thead class="table-dark">
-            <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each = "user : ${users}">
-                <td th:text = "${user.firstName}"></td>
-                <td th:text = "${user.lastName}"></td>
-                <td th:text = "${user.email}"></td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+
 </body>
+    <div class="footer text-center">
+        <p>&copy; 2023 Music Store. All rights reserved.</p>
+    </div>
 </html>

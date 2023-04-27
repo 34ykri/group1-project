@@ -33,6 +33,9 @@
 						<a class="nav-link active" aria-current="page" th:href="@{/AddProduct}">Add Product</a>
 					</li>
 					<li th:if="${admin}" class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/AdminProducts}">Edit Product</a>
+                </li>
+					<li th:if="${admin}" class="nav-item">
 						<a class="nav-link active" aria-current="page" th:href="@{/ViewAdminOrders}">View Admin
 							Orders</a>
 					</li>

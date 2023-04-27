@@ -37,6 +37,7 @@ public class OrderController {
 	@GetMapping("/ViewAdminOrders")
 	public String ViewAdminOrders(Model model) {
 		if(orderRepo.findAll().isEmpty()) {
+			model.addAttribute("admin", true);
 			model.addAttribute("ordersEmpty", true);
 			return "OrderLookup";
 		}
