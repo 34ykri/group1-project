@@ -129,6 +129,7 @@ public class CartController {
 		if(ce == null) {
 			ce =  new CartEntity(p.getId(), p.getBrand(), p.getItem(),p.getPrice());
 			ce.setQuantity(1);
+			
 		}
 		else {
 			ce.setQuantity(ce.getQuantity()-1);
