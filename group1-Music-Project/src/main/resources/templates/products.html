@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"
-    xmlns:th="http://www.thymeleaf.org"
->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>My Music Store</title>
@@ -28,6 +26,9 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" th:href="@{/Checkout}">Checkout</a>
+                </li>
+                <li id="addToCart" class="nav-item" th:if="${addToCart}">
+                	<span><a class="nav-link active" style="background-color: white; color: black;">Added <span th:text="${itemName}"></span> to Cart!</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
@@ -65,15 +66,22 @@
                         <div class="description">
                             <p th:text="${currentProd.description}">Description</p>
                         </div>
-                        <p th:inline="text">[[${currentProd.price}]]</p>
-<!--                         <a href="/product/1" class="btn btn-primary">View Details</a> -->
+                        <p th:inline="text">$[[${currentProd.price}]]</p>
+                        <a th:href="@{/ViewProduct/{id}(id=${currentProd.id})}" class="btn btn-primary">View Details</a>
                         <a th:href="@{/AddToCart/{id}(id=${currentProd.id})}" class="btn btn-success">Add To Cart</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+<script>
+  var addToCart = document.getElementById('addToCart');
+  if (addToCart) {
+	  setTimeout(function() {
+		  addToCart.style.display = 'none';
+	  }, 3000); 
+  }
+</script>
 </body>
     <div class="footer text-center">
         <p>&copy; 2023 Music Store. All rights reserved.</p>

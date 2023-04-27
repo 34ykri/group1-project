@@ -79,6 +79,7 @@ public class OrderController {
 		public String OrderLookup(Model model) {
 			
 			User u = new User();
+			model.addAttribute("user", true);
 			model.addAttribute("login", true);
 			model.addAttribute("returningUser", u);
 			return "OrderLookup";

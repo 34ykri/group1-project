@@ -66,6 +66,12 @@ public class ProductController {
     	productRepo.delete(p);
         return authController.AdminShowProductsForm(model);
     }
+    @GetMapping("/ViewProduct/{id}")
+    public String ViewProduct(@PathVariable("id") int id, Model model) {
+        Product p = productRepo.findById(id).orElse(null);
+        model.addAttribute("product", p);
+        return "ViewProduct";
+    }
     @GetMapping("ViewAllProducts")
     public String ViewAllProducts(Model model) {
         if(productRepo.findAll().isEmpty()) {
