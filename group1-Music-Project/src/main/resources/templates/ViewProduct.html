@@ -1,13 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>My Music Store</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-          crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/css/products.css">
+<meta charset="UTF-8">
+<title>View Product Details</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -26,9 +23,6 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" th:href="@{/Checkout}">Checkout</a>
-                </li>
-                <li id="addToCart" class="nav-item" th:if="${addToCart}">
-                	<span><a class="nav-link active" style="background-color: white; color: black;">Added <span th:text="${itemName}"></span> to Cart!</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
@@ -54,26 +48,22 @@
         </div>
     </div>
 </nav>
-
-    <div class="container">
-    <br />
-        <h1 class="text-center">Products</h1>
-        <div class="row">
-            <div class="col-md-4" th:each="currentProd : ${products}">
-                <div class="product-card">
-                    <div class="card-body">
-                        <h5 th:text="${currentProd.item}">Product</h5>
-                        <div class="description">
-                            <p th:text="${currentProd.description}">Description</p>
-                        </div>
-                        <p th:inline="text">$[[${currentProd.price}]]</p>
-                        <a th:href="@{/ViewProduct/{id}(id=${currentProd.id})}" class="btn btn-primary">View Details</a>
-                        <a th:href="@{/AddToCart/{id}(id=${currentProd.id})}" class="btn btn-success">Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="container">
+<div class="text-center">
+	<br>
+	<div id="addToCart" th:if="${addedViewProduct}">
+		<h1 class="text-success">Added to Cart!</h1>
+		<br>
+	</div>
+	<h1><span th:text="${product.brand}"></span> | <span th:text="${product.item}"></span></h1>
+	<h2 th:text="${product.type}"></h2>
+	<h3>$<span th:text="${product.price}"></span></h3>
+	<br>
+	<h5 th:text="${product.description}" style="font-weight: normal;"></h5>
+	<br>
+	<a th:href="@{/DetailsAddToCart/{id}(id=${product.id})}" class="btn btn-success">Add To Cart</a>
+</div>
+</div>
 <script>
   var addToCart = document.getElementById('addToCart');
   if (addToCart) {
@@ -83,7 +73,5 @@
   }
 </script>
 </body>
-    <div class="footer text-center">
-        <p>&copy; 2023 Music Store. All rights reserved.</p>
-    </div>
+
 </html>

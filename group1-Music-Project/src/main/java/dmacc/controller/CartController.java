@@ -35,6 +35,8 @@ public class CartController {
 	public AuthController authController;
 	@Autowired
 	public OrderController orderController;
+	@Autowired
+	public ProductController productController;
 	String cartSessionId;
 
 	@GetMapping("/ViewCart")
@@ -85,8 +87,40 @@ public class CartController {
 		cartRepo.save(ce);
 		productRepo.save(p);
 		model.addAttribute("addToCart", true);
+		model.addAttribute("itemName", ce.getItem());
         model.addAttribute("products", productRepo.findAll());
 		return "products";
+	}
+	@GetMapping("/DetailsAddToCart/{id}")
+	public String DetailsAddToCart(@PathVariable("id") int id, Model model) {
+	
+		if(cartSessionId == null) {
+			cartSessionId = CartSessionID.createCartSessionID();
+		}
+		Product p = productRepo.findById(id).orElse(null);
+		//Id, brand, item, price
+		CartEntity ce = cartRepo.findInCart(cartSessionId, id);
+		if(ce == null) {
+			ce =  new CartEntity(p.getId(), p.getBrand(), p.getItem(),p.getPrice());
+			ce.setQuantity(1);
+		}
+		else {
+			ce.setQuantity(ce.getQuantity()+1);
+		}
+
+		ce.setEntitySessionID(cartSessionId);
+
+		if(ce == null || p == null) {
+			return "products";
+		}
+		
+		//Subtract from inventory
+		cartRepo.save(ce);
+		productRepo.save(p);
+		model.addAttribute("addToCart", true);
+		model.addAttribute("addedViewProduct", true);
+        model.addAttribute("products", productRepo.findAll());
+		return productController.ViewProduct(id, model);
 	}
 	@GetMapping("/AddOne/{id}")
 	public String AddOne(@PathVariable("id") int id, Model model) {
@@ -165,7 +199,20 @@ public class CartController {
 		productRepo.save(p);
 		return ViewCart(model);
 	}
-
+	@GetMapping("/ClearCart")
+	public String ClearCart(Model model) {
+		List<CartEntity> cartItems = cartRepo.findItems(cartSessionId);
+		for(int i = 0; i<cartItems.size(); i++) {
+			int id = cartItems.get(i).getId();
+			int prodId = cartItems.get(i).getProductId();
+			CartEntity ce = cartRepo.findById(id).orElse(null);
+			Product p = productRepo.findById(prodId).orElse(null);
+			p.setInventory(p.getInventory() + ce.getQuantity());
+			cartRepo.delete(ce);
+			productRepo.save(p);
+		}
+		return ViewCart(model);
+	}
 	@GetMapping("/Checkout")
 	public String Checkout(Model model) {
 		Order o = new Order();

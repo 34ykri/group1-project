@@ -73,7 +73,7 @@
                             <p th:text="${currentProd.description}">Description</p>
                         </div>
                         <p th:inline="text">$[[${currentProd.price}]]</p>
-<!--                         <a href="/product/1" class="btn btn-primary">View Details</a> -->
+<!--                         <a th:href="@{/ViewDetails/{id}(id=${currentProd.id})}" class="btn btn-primary">View Details</a> -->
                         <a th:href="@{/EditProduct/{id}(id=${currentProd.id})}" class="btn btn-warning">Edit</a>
                         <a th:href="@{/DeleteProduct/{id}(id=${currentProd.id})}" class="btn btn-danger">Delete</a>  
                     </div>
