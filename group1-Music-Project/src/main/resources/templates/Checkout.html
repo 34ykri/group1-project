@@ -6,8 +6,98 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<title>Checkout</title>
-</head>
+	<script type="text/javascript">
+		function validate(){
+			 	var fname = document.check.fname.value;
+			    var lname = document.check.lname.value;
+			    var address = document.check.address.value;
+			    var zip = document.check.zip.value;
+			    var city = document.check.city.value;
+			    var cardNumber = document.check.cardNumber.value;
+			    var securityCode = document.check.securityCode.value;
+			    var nameOnCard = document.check.nameOnCard.value;
 
+			    if (!/^[a-zA-Z]+$/.test(fname)) {
+			        alert("First name should contain only letters.");
+			        document.check.fname.focus();
+			        return false;
+			    }
+			    if (!/^[a-zA-Z]+$/.test(lname)) {
+			        alert("Last name should contain only letters.");
+			        document.check.lname.focus();
+			        return false;
+			    }
+			    if (!/^[a-zA-Z]+$/.test(city)) {
+			        alert("City should contain only letters.");
+			        document.check.city.focus();
+			        return false;
+			    }
+			    if (!/^[0-9]+$/.test(zip)) {
+			        alert("Zip code should contain only numbers.");
+			        document.check.zip.focus();
+			        return false;
+			    }
+			    if (!/^[0-9]+$/.test(cardNumber)) {
+			        alert("Card Number should contain only numbers.");
+			        document.check.cardNumber.focus();
+			        return false;
+			    }
+			    if (!/^[0-9]+$/.test(securityCode)) {
+			        alert("Security Code should contain only numbers.");
+			        document.check.securityCode.focus();
+			        return false;
+			    }
+			    if (!/^[a-zA-Z\s]+$/.test(nameOnCard)) {
+			        alert("Name on Card should contain only letters and spaces.");
+			        document.check.nameOnCard.focus();
+			        return false;
+			    }
+			    if (fname == "") {
+			        alert("Please input your First Name.");
+			        document.check.fname.focus();
+			        return false;
+			    }
+			    if (lname == "") {
+			        alert("Please input your Last Name.");
+			        document.check.lname.focus();
+			        return false;
+			    }
+			    if (address == "") {
+			        alert("Please input your Address.");
+			        document.check.address.focus();
+			        return false;
+			    }
+			    if (zip == "") {
+			        alert("Please input your Zip Code.");
+			        document.check.zip.focus();
+			        return false;
+			    }
+			    if (city == "") {
+			        alert("Please input your City.");
+			        document.check.city.focus();
+			        return false;
+			    }
+			    if (cardNum == "") {
+			        alert("Please input your Card Number.");
+			        document.check.cardNumber.focus();
+			        return false;
+			    }
+			    if (securityCode == "") {
+			        alert("Please input your Security Code.");
+			        document.check.securityCode.focus();
+			        return false;
+			    }
+			    if (nameOnCard == "") {
+			        alert("Please input your Name on Card.");
+			        document.check.nameOnCard.focus();
+			        return false;
+			    }
+			    
+			    return true;
+		}
+	
+	</script>
+</head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="container-fluid">
@@ -75,7 +165,7 @@
 				<td>6%</td>
 			</tr>
 		</table>
-		<form th:object="${newOrder}" th:action="@{/Checkout}" method="POST" id="orderForm">
+		<form th:object="${newOrder}" th:action="@{/Checkout}" method="POST" id="orderForm" name = "check" onsubmit = "return(validate());">
 			<!-- 		<div th:if="${userError}">Incorrect Email or Password, Try again</div> -->
 			<div th:if="${userError}">Email not valid, Try again or
 				<a href="/register">Register an Account</a><br />
@@ -89,27 +179,27 @@
 			</div>
 			<div class="form-group">
 				<div class="form-group col-md-2">
-					First Name: <input name="fname" id="fname" size="20" class="form-control" placeholder="First Name" required>
+					First Name: <input name="fname" id="fname" size="30" maxlength="30" class="form-control" placeholder="First Name" required>
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="form-group col-md-2">
-					Last Name: <input name="lname" id="lname" size="20" placeholder="Last Name"  class="form-control" required>
+					Last Name: <input name="lname" id="lname" size="30" maxlength="30" placeholder="Last Name"  class="form-control" required>
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="form-group col-md-3">
-					Address: <input name="address" id="address" size="30" class="form-control" placeholder="Address" required>
+					Address: <input name="address" id="address" size="35" maxlength="35" class="form-control" placeholder="Address" required>
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="form-group col-md-1">
-					Zip Code: <input name="zip" id="zip" size="5" class="form-control" placeholder="Zip" required>
+					Zip Code: <input name="zip" id="zip" size="5" maxlength="5" class="form-control" placeholder="Zip" required>
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="form-group col-md-2">
-					City: <input name="city" id="city" size="20" class="form-control" placeholder="City"  required>
+					City: <input name="city" id="city" size="30" maxlength="30" class="form-control" placeholder="City"  required>
 				</div>
 			</div>
 			<div class="form-group">
@@ -172,17 +262,17 @@
 			</div>
 			<div class="form-group">
 				<div class="form-group col-md-4">
-					Card Number: <input name="cardNumber" id="cardNumber" size="16" class="form-control" placeholder="Card Number" required>
+					Card Number: <input name="cardNumber" id="cardNumber" size="16" maxlength="16"  class="form-control" placeholder="Card Number" required>
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="form-group col-md-1">
-					Security Code: <input name="securityCode" id="securityCode" size="3" class="form-control" placeholder="Sec. Code" required>
+					Security Code: <input name="securityCode" id="securityCode" size="3" maxlength="3" class="form-control" placeholder="Sec. Code" required>
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="form-group col-md-3">
-					Name On Card: <input name="nameOnCard" id="nameOnCard" size="40" class="form-control" placeholder="Name on Card"  required>
+					Name On Card: <input name="nameOnCard" id="nameOnCard" size="60" maxlength="60"  class="form-control" placeholder="Name on Card"  required>
 				</div>
 			</div>
 			<div class="form-group">
