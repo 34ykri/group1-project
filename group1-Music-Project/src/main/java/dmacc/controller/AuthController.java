@@ -71,10 +71,14 @@ public class AuthController {
         adminUserService.createPresetAdminUser();
         return "adminLogin";
     }
-    
+    @GetMapping("users")
+    public String ViewUsers(Model model) {
+    	List<UserDto> users = userService.findAllUsers();
+        model.addAttribute("users", users);
+        return "users";
+    }
     @PostMapping("/adminLogin")
     public String adminLogin(@RequestParam("username") String username, @RequestParam("password") String password, Model model) {
-    	
         if (adminUserService.checkPresetAdminCredentials(username, password)) {
         	List<UserDto> users = userService.findAllUsers();
             model.addAttribute("users", users);
