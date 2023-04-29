@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+    xmlns:th="http://www.thymeleaf.org"
+>
 <head>
     <meta charset="UTF-8">
     <title>My Music Store</title>
@@ -18,29 +20,33 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+<!--             	<li class="nav-item"> -->
+<!--                     <a class="nav-link active" aria-current="page" th:href="@{/products}">Products</a> -->
+<!--                 </li> -->
+<!--                 <li class="nav-item"> -->
+<!--                     <a class="nav-link active" aria-current="page" th:href="@{/ViewCart}">Cart</a> -->
+<!--                 </li> -->
+<!--                 <li class="nav-item"> -->
+<!--                     <a class="nav-link active" aria-current="page" th:href="@{/Checkout}">Checkout</a> -->
+<!--                 </li> -->
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/products}">Products</a>
+                    <a class="nav-link active" aria-current="page" th:href="@{/AddProduct}">Add Product</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/ViewCart}">Shopping Cart</a>
+                    <a class="nav-link active" aria-current="page" th:href="@{/AdminProducts}">Manage Products</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/Checkout}">Checkout</a>
+                    <a class="nav-link active" aria-current="page" th:href="@{/ViewAdminOrders}">View Admin Orders</a>
                 </li>
-                <li id="addToCart" class="nav-item" th:if="${addToCart}">
-                	<span><a class="nav-link active" style="background-color: white; color: black;">Added <span th:text="${itemName}"></span> to Cart!</a>
-                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/users}">View Users</a>
+                </li>     
             </ul>
-            <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-	            <li class="nav-item">
-	            	<a class="nav-link active" aria-current="page" th:href="@{/register}">Create New Account</a>
-	            </li>
-            </ul>
-             <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-      			<li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/OrderLookup}">My Orders</a>
-      			</li>
-      		</ul>
+<!--             <ul class="navbar-nav ml-auto mb-2 mb-lg-0"> -->
+<!-- 	            <li class="nav-item"> -->
+<!-- 	            	<a class="nav-link active" aria-current="page" th:href="@{/register}">Create New Account</a> -->
+<!-- 	            </li> -->
+<!--             </ul> -->
             <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
 	            <li class="nav-item">
 	            	<a class="nav-link active" aria-current="page" th:href="@{/logout}">Logout</a>
@@ -57,7 +63,7 @@
 
     <div class="container">
     <br />
-        <h1 class="text-center">Products</h1>
+        <h1 class="text-center">Admin View Products</h1>
         <div class="row">
             <div class="col-md-4" th:each="currentProd : ${products}">
                 <div class="product-card">
@@ -67,21 +73,15 @@
                             <p th:text="${currentProd.description}">Description</p>
                         </div>
                         <p th:inline="text">$[[${currentProd.price}]]</p>
-                        <a th:href="@{/ViewProduct/{id}(id=${currentProd.id})}" class="btn btn-primary">View Details</a>
-                        <a th:href="@{/AddToCart/{id}(id=${currentProd.id})}" class="btn btn-success">Add To Cart</a>
+<!--                         <a th:href="@{/ViewDetails/{id}(id=${currentProd.id})}" class="btn btn-primary">View Details</a> -->
+                        <a th:href="@{/EditProduct/{id}(id=${currentProd.id})}" class="btn btn-warning">Edit</a>
+                        <a th:href="@{/DeleteProduct/{id}(id=${currentProd.id})}" class="btn btn-danger">Delete</a>  
                     </div>
                 </div>
             </div>
         </div>
     </div>
-<script>
-  var addToCart = document.getElementById('addToCart');
-  if (addToCart) {
-	  setTimeout(function() {
-		  addToCart.style.display = 'none';
-	  }, 3000); 
-  }
-</script>
+
 </body>
     <div class="footer text-center">
         <p>&copy; 2023 Music Store. All rights reserved.</p>

@@ -11,6 +11,7 @@
 
 <body>
 
+<div th:if="${user}">
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="container-fluid">
 			<a class="navbar-brand" th:href="@{/index}">My Music Store</a>
@@ -25,7 +26,7 @@
 						<a class="nav-link active" aria-current="page" th:href="@{/products}">Products</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" th:href="@{/ViewCart}">Cart</a>
+						<a class="nav-link active" aria-current="page" th:href="@{/ViewCart}">Shopping Cart</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link active" aria-current="page" th:href="@{/Checkout}">Checkout</a>
@@ -33,6 +34,9 @@
 					<li th:if="${admin}" class="nav-item">
 						<a class="nav-link active" aria-current="page" th:href="@{/AddProduct}">Add Product</a>
 					</li>
+					<li th:if="${admin}" class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/AdminProducts}">Edit Product</a>
+                </li>
 					<li th:if="${admin}" class="nav-item">
 						<a class="nav-link active" aria-current="page" th:href="@{/ViewAdminOrders}">View Admin
 							Orders</a>
@@ -61,6 +65,43 @@
 			</div>
 		</div>
 	</nav>
+	</div>
+	<div th:if="${admin}">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/index}">My Music Store</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/AddProduct}">Add Product</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/AdminProducts}">Manage Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/ViewAdminOrders}">View Admin Orders</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/users}">View Users</a>
+                </li>     
+            </ul>
+            <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+	            <li class="nav-item">
+	            	<a class="nav-link active" aria-current="page" th:href="@{/logout}">Logout</a>
+	            </li>
+            </ul>
+            <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+      			<li class="nav-item">
+      				<a class="nav-link active" aria-current="page" th:href="@{/adminLogin}">Admin</a>
+      			</li>
+      		</ul>
+        </div>
+    </div>
+</nav>
+	</div>
 	<div class="container">
 		<div th:if="${login}">
 			<br />

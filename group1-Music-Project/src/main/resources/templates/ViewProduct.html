@@ -2,23 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-          crossorigin="anonymous">
-          <title>Thank You for your Purchase</title>
+<title>View Product Details</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
-	<nav>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/">Order Lookup</a></li>
-            <li><a href="/Register">Register</a>
-            <li><a href="/ContactUs">Contact</a></li>
-            <li><a href="/ViewAllProducts">View All Products</a></li>
-            <li><a href="/ViewCart">Cart</a></li>
-        </ul>
-    </nav>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" th:href="@{/index}">My Music Store</a>
@@ -42,7 +30,7 @@
 	            	<a class="nav-link active" aria-current="page" th:href="@{/register}">Create New Account</a>
 	            </li>
             </ul>
-            <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+             <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
       			<li class="nav-item">
                     <a class="nav-link active" aria-current="page" th:href="@{/OrderLookup}">My Orders</a>
       			</li>
@@ -61,25 +49,29 @@
     </div>
 </nav>
 <div class="container">
-<h1>Thank you for your order</h1>
-<h2>Order Number : <span th:text="${order.idOrderNumber}"></span></h2>
-<h2>Order Status : <span th:text="${order.orderStatus}"></span></h2>
-<table>
-	<tr>
-		<th>Product Id</th>
-        <th>Item Name</th>
-        <th>Brand</th>
-        <th>Price</th>
-        <th>Quantity</th>
-   </tr>
-   <tr th:each="item : ${order.items}">
-        <td th:text="${item.productId}"></td>
-        <td th:text="${item.item}"></td>
-        <td th:text="${item.brand}"></td>
-        <td th:text="${item.price}"></td>
-        <td th:text="${item.quantity}"></td>
-  </tr>
-</table>
+<div class="text-center">
+	<br>
+	<div id="addToCart" th:if="${addedViewProduct}">
+		<h1 class="text-success">Added to Cart!</h1>
+		<br>
+	</div>
+	<h1><span th:text="${product.brand}"></span> | <span th:text="${product.item}"></span></h1>
+	<h2 th:text="${product.type}"></h2>
+	<h3>$<span th:text="${product.price}"></span></h3>
+	<br>
+	<h5 th:text="${product.description}" style="font-weight: normal;"></h5>
+	<br>
+	<a th:href="@{/DetailsAddToCart/{id}(id=${product.id})}" class="btn btn-success">Add To Cart</a>
 </div>
+</div>
+<script>
+  var addToCart = document.getElementById('addToCart');
+  if (addToCart) {
+	  setTimeout(function() {
+		  addToCart.style.display = 'none';
+	  }, 3000); 
+  }
+</script>
 </body>
+
 </html>

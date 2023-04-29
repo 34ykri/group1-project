@@ -58,15 +58,27 @@ public class AuthController {
         return "products";
     }
     
+    @GetMapping("AdminProducts")
+    public String AdminShowProductsForm(Model model) {
+    	UserDto user = new UserDto();
+    	model.addAttribute("user", user);
+        model.addAttribute("products", productRepo.findAll());
+        return "AdminProducts";
+    }
+    
     @GetMapping("adminLogin")
     public String adminLogin() {
         adminUserService.createPresetAdminUser();
         return "adminLogin";
     }
-    
+    @GetMapping("users")
+    public String ViewUsers(Model model) {
+    	List<UserDto> users = userService.findAllUsers();
+        model.addAttribute("users", users);
+        return "users";
+    }
     @PostMapping("/adminLogin")
     public String adminLogin(@RequestParam("username") String username, @RequestParam("password") String password, Model model) {
-    	
         if (adminUserService.checkPresetAdminCredentials(username, password)) {
         	List<UserDto> users = userService.findAllUsers();
             model.addAttribute("users", users);

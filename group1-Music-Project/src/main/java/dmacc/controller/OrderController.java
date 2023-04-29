@@ -37,6 +37,7 @@ public class OrderController {
 	@GetMapping("/ViewAdminOrders")
 	public String ViewAdminOrders(Model model) {
 		if(orderRepo.findAll().isEmpty()) {
+			model.addAttribute("admin", true);
 			model.addAttribute("ordersEmpty", true);
 			return "OrderLookup";
 		}
@@ -78,6 +79,7 @@ public class OrderController {
 		public String OrderLookup(Model model) {
 			
 			User u = new User();
+			model.addAttribute("user", true);
 			model.addAttribute("login", true);
 			model.addAttribute("returningUser", u);
 			return "OrderLookup";
