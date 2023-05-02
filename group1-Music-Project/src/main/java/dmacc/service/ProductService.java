@@ -17,23 +17,12 @@ public class ProductService {
 		if(keyword != null) {
 			
 		}
-		return repo.findAll();
+		return repo.findAll(keyword);
 	}
 	
 	public void save(Product product) {
 		repo.save(product); 
 	}
-	
-//	 public List<Product> getAllProducts(String keyword){
-//		 if(keyword != null) {
-//			 return repo.findByKeyword(keyword);	
-//		 }
-//		  List<Product> list =  (List<Product>)repo.findAll();
-//		  return list;
-//		 }
-//		 
-//		 public List<Product> getByKeyword(String keyword){
-//		  return repo.findByKeyword(keyword);
-//		 }
-	}
+
+}
 
