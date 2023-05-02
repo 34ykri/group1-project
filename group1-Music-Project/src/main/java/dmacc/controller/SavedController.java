@@ -23,7 +23,7 @@ public class SavedController {
 	@GetMapping("/ViewSavedItems")
 	public String ViewSavedItems(Model model) {
 		if(saveRepo.findAll().isEmpty()) {
-			return "AllProducts";
+			return "products";
 		}
 		model.addAttribute("saved", saveRepo.findAll());
 		return "SavedItems";
@@ -36,9 +36,6 @@ public class SavedController {
 		if(se == null) {
 			se = new SavedEntity(p.getId(), p.getBrand(), p.getItem(),p.getPrice());
 		}
-		if(se == null || p == null) {
-			return "AllProducts";
-		}
 		saveRepo.save(se);
 		productRepo.save(p);
 		return ViewSavedItems(model);
@@ -48,9 +45,7 @@ public class SavedController {
 	public String RemoveFromSaved(@PathVariable("id") int id, Model model) {
 		SavedEntity se = saveRepo.findById(id).orElse(null);
 		Product p = productRepo.findById(id).orElse(null);
-		if(se == null || p == null) {
-			return "AllProducts";
-		}
+
 		saveRepo.delete(se);
 		productRepo.save(p);
 		return "SavedItems";

@@ -118,6 +118,9 @@
 					<li class="nav-item">
 						<a class="nav-link active" aria-current="page" th:href="@{/Checkout}">Checkout</a>
 					</li>
+					<li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/ContactUs}">Contact Us</a>
+                	</li>
 				</ul>
 				<ul class="navbar-nav ml-auto mb-2 mb-lg-0">
 					<li class="nav-item">
@@ -165,7 +168,7 @@
 				<td>6%</td>
 			</tr>
 		</table>
-		<form th:object="${newOrder}" th:action="@{/Checkout}" method="POST" id="orderForm" name = "check" onsubmit = "return(validate());">
+		<form th:object="${newOrder}" th:action="@{/Checkout}" method="POST" id="orderForm" name = "check" onsubmit = "validate()">
 			<!-- 		<div th:if="${userError}">Incorrect Email or Password, Try again</div> -->
 			<div th:if="${userError}">Email not valid, Try again or
 				<a href="/register">Register an Account</a><br />

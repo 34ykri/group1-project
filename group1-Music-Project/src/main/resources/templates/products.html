@@ -27,6 +27,10 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" th:href="@{/Checkout}">Checkout</a>
                 </li>
+                                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/ContactUs}">Contact Us</a>
+                </li>
+                
                 <li id="addToCart" class="nav-item" th:if="${addToCart}">
                 	<span><a class="nav-link active" style="background-color: white; color: black;">Added <span th:text="${itemName}"></span> to Cart!</a>
                 </li>
@@ -55,6 +59,12 @@
     </div>
 </nav>
 
+<form th:action="@{/search}" method="post"> 
+  <input type="text" name="keyword" th:value="${keyword}"  placeholder="Search Products" size="75" required />
+  <button type = "submit">Search</button>  
+  <button type = "reset">Clear</button>
+</form>
+
     <div class="container">
     <br />
         <h1 class="text-center">Products</h1>
@@ -69,6 +79,7 @@
                         <p th:inline="text">$[[${currentProd.price}]]</p>
                         <a th:href="@{/ViewProduct/{id}(id=${currentProd.id})}" class="btn btn-primary">View Details</a>
                         <a th:href="@{/AddToCart/{id}(id=${currentProd.id})}" class="btn btn-success">Add To Cart</a>
+                        <a th:href="@{/SaveForLater/{id}(id=${currentProd.id})}" class="btn btn-success">Save For Later</a>
                     </div>
                 </div>
             </div>
